@@ -96,4 +96,8 @@
   .navbtn .lbl {
     display: none;
   }
+  /* com o modo claro ligado, o botão mostra como voltar */
+  .navbtn[aria-pressed="true"] .lbl {
+    display: inline;
+  }
 }

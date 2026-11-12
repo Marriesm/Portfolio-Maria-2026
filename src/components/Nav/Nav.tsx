@@ -33,7 +33,7 @@ export function Nav({ palette, classic, onPalette, onToggleClassic, onOpenComman
       </div>
       <button className={styles.navbtn} type="button" aria-pressed={classic} title="Versão limpa, sem 3D" onClick={onToggleClassic}>
         <span>👁</span>
-        <span className={styles.lbl}>Modo recrutador</span>
+        <span className={styles.lbl}>{classic ? "Voltar ao escuro" : "Modo recrutador"}</span>
       </button>
       <button className={styles.navbtn} type="button" aria-label="Abrir comandos" onClick={onOpenCommands}>
         <span>⌘</span>
