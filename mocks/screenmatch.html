@@ -1,0 +1,110 @@
+<!doctype html>
+<!-- Screenmatch (Java + Spring Boot): saída do console reproduzida com uma série de exemplo. Gera src/assets/projetos/screenmatch-1.png -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Screenmatch (mock)</title>
+<style>
+  :root { --bg: #14121a; --panel: #1d1a24; --line: #2f2a3a; --ink: #eae6f2; --muted: #8f87a0;
+    --rose: #f43f7a; --coral: #ff8a5b; --teal: #2dd4bf; --amber: #ffc857; --blue: #7aa2ff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 1600px; height: 1000px; overflow: hidden; background: var(--bg); color: var(--ink);
+    font: 14px/1.5 "Cascadia Code", "JetBrains Mono", Consolas, monospace; display: grid; grid-template-columns: 300px 1fr 1fr; }
+  .tree { background: #18151f; border-right: 1px solid var(--line); padding: 16px 0; font-size: 13px; }
+  .tree h4 { margin: 0 16px 10px; font: 700 11px "Segoe UI", sans-serif; letter-spacing: .1em; color: var(--muted); }
+  .tree div { padding: 3px 16px; white-space: nowrap; color: #cfc9db; }
+  .tree .on { background: #2d1622; color: #fff; border-left: 2px solid var(--rose); }
+  .d { color: var(--muted); }
+  .j::before { content: "☕ "; }
+  .pane { display: flex; flex-direction: column; min-width: 0; border-right: 1px solid var(--line); }
+  .tabs { display: flex; background: #18151f; border-bottom: 1px solid var(--line); font: 13px "Segoe UI", sans-serif; }
+  .tabs span { padding: 10px 16px; color: var(--muted); }
+  .tabs .on { color: #fff; background: var(--bg); border-top: 2px solid var(--rose); }
+  pre { margin: 0; padding: 16px 20px; white-space: pre; font: inherit; }
+  .k { color: #ff7ab2; } .t { color: var(--teal); } .s { color: var(--amber); } .c { color: #6e6680; font-style: italic; } .m { color: var(--blue); }
+  .n { color: #4d4660; display: inline-block; width: 26px; }
+  .run { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: #18151f; font: 13px "Segoe UI", sans-serif; }
+  .run b { padding: 4px 12px; border-radius: 6px; background: linear-gradient(135deg, var(--rose), var(--coral)); }
+  .out .ok { color: var(--teal); } .out .h { color: var(--coral); font-weight: 700; } .out .dim { color: var(--muted); }
+  .badges { display: flex; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--line); margin-top: auto; font: 12px "Segoe UI", sans-serif; }
+  .badges span { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: #d9d2e6; }
+</style>
+</head>
+<body>
+  <aside class="tree">
+    <h4>SCREENMATCH</h4>
+    <div class="d">▾ src/main/java</div>
+    <div class="d">&nbsp;&nbsp;▾ br.com.alura.screenmatch</div>
+    <div class="j">&nbsp;&nbsp;&nbsp;&nbsp;ScreenmatchApplication</div>
+    <div class="d">&nbsp;&nbsp;&nbsp;&nbsp;▾ model</div>
+    <div class="j">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DadosSerie</div>
+    <div class="j">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DadosTemporada</div>
+    <div class="j">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DadosEpisodio</div>
+    <div class="j">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Episodio</div>
+    <div class="d">&nbsp;&nbsp;&nbsp;&nbsp;▾ service</div>
+    <div class="j">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ConsumoApi</div>
+    <div class="j">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ConverteDados</div>
+    <div class="j">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IConverteDados</div>
+    <div class="d">&nbsp;&nbsp;&nbsp;&nbsp;▾ principal</div>
+    <div class="j on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Principal</div>
+    <div class="d">▸ src/main/resources</div>
+    <div class="d">&nbsp;&nbsp;pom.xml</div>
+  </aside>
+
+  <section class="pane">
+    <div class="tabs"><span class="on">Principal.java</span><span>ConverteDados.java</span><span>pom.xml</span></div>
+<pre><span class="n">1</span><span class="c">// top 5 episódios pela avaliação, com Streams</span>
+<span class="n">2</span><span class="t">List</span>&lt;<span class="t">DadosEpisodio</span>&gt; dadosEpisodios = temporadas.<span class="m">stream</span>()
+<span class="n">3</span>        .<span class="m">flatMap</span>(t -&gt; t.<span class="m">episodios</span>().<span class="m">stream</span>())
+<span class="n">4</span>        .<span class="m">collect</span>(<span class="t">Collectors</span>.<span class="m">toList</span>());
+<span class="n">5</span>
+<span class="n">6</span>dadosEpisodios.<span class="m">stream</span>()
+<span class="n">7</span>        .<span class="m">filter</span>(e -&gt; !e.<span class="m">avaliacao</span>().<span class="m">equalsIgnoreCase</span>(<span class="s">"N/A"</span>))
+<span class="n">8</span>        .<span class="m">sorted</span>(<span class="t">Comparator</span>.<span class="m">comparing</span>(<span class="t">DadosEpisodio</span>::avaliacao).<span class="m">reversed</span>())
+<span class="n">9</span>        .<span class="m">limit</span>(<span class="s">5</span>)
+<span class="n">10</span>        .<span class="m">map</span>(e -&gt; e.<span class="m">titulo</span>().<span class="m">toUpperCase</span>())
+<span class="n">11</span>        .<span class="m">forEach</span>(<span class="t">System</span>.out::println);
+<span class="n">12</span>
+<span class="n">13</span><span class="c">// estatísticas das avaliações por temporada</span>
+<span class="n">14</span><span class="t">Map</span>&lt;<span class="t">Integer</span>, <span class="t">Double</span>&gt; mediaPorTemporada = episodios.<span class="m">stream</span>()
+<span class="n">15</span>        .<span class="m">filter</span>(e -&gt; e.<span class="m">getAvaliacao</span>() &gt; <span class="s">0.0</span>)
+<span class="n">16</span>        .<span class="m">collect</span>(<span class="t">Collectors</span>.<span class="m">groupingBy</span>(<span class="t">Episodio</span>::getTemporada,
+<span class="n">17</span>                <span class="t">Collectors</span>.<span class="m">averagingDouble</span>(<span class="t">Episodio</span>::getAvaliacao)));
+<span class="n">18</span>
+<span class="n">19</span><span class="t">DoubleSummaryStatistics</span> est = episodios.<span class="m">stream</span>()
+<span class="n">20</span>        .<span class="m">collect</span>(<span class="t">Collectors</span>.<span class="m">summarizingDouble</span>(<span class="t">Episodio</span>::getAvaliacao));
+</pre>
+    <div class="badges"><span>Java 17</span><span>Spring Boot 3.5</span><span>Maven</span><span>Jackson</span><span>Streams e lambdas</span><span>API REST externa</span></div>
+  </section>
+
+  <section class="pane out">
+    <div class="run"><b>▶ Run</b> ScreenmatchApplication <span class="dim" style="margin-left:auto">console</span></div>
+<pre><span class="dim">  .   ____          _
+ /\\ / ___'_ __ _ _(_)_ __  __ _
+( ( )\___ | '_ | '_| | '_ \/ _` |
+ \\/  ___)| |_)| | | | | || (_| |
+  '  |____| .__|_| |_|_| |_\__, |
+ =========|_|==============|___/</span>
+<span class="ok">Started ScreenmatchApplication in 1.2 seconds</span>
+
+Digite o nome da série para busca
+<span class="h">&gt; Série Exemplo</span>
+
+DadosSerie[titulo=Série Exemplo, totalTemporadas=3, avaliacao=8.6]
+
+<span class="h">Top 5 episódios</span>
+ 1. EPISÓDIO EXEMPLO A        9.4
+ 2. EPISÓDIO EXEMPLO B        9.2
+ 3. EPISÓDIO EXEMPLO C        9.1
+ 4. EPISÓDIO EXEMPLO D        8.9
+ 5. EPISÓDIO EXEMPLO E        8.8
+
+<span class="h">Média por temporada</span>
+{1=8.4, 2=8.7, 3=8.9}
+
+<span class="h">Estatísticas</span>
+Média: 8.67 · Melhor: 9.4 · Pior: 7.6 · Episódios: 30
+</pre>
+  </section>
+</body>
+</html>

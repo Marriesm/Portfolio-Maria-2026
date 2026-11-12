@@ -1,0 +1,52 @@
+/* Tokens de cor, tipografia e paletas — valores idênticos ao original. */
+:root {
+  --bg: #06030D;
+  --bg-2: #0D0720;
+  --panel: rgba(16, 8, 34, .72);
+  --panel-solid: #120A28;
+  --fg: #F4ECFF;
+  --muted: #AFA2CF;
+  --line: #2E1C56;
+  --signal: #39FF9F;
+  --signal-ink: #39FF9F;
+  --data: #B026FF;
+  --pink: #FF2BD6;
+  --on-signal: #04140C;
+  --f-display: "Chakra Petch", "Trebuchet MS", sans-serif;
+  --f-body: "DM Sans", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+
+/* Paletas neon */
+:root[data-palette="fucsia"] {
+  --signal: #FF2BD6;
+  --signal-ink: #FF2BD6;
+  --data: #7B5CFF;
+  --pink: #39FF9F;
+  --on-signal: #1A0216;
+}
+:root[data-palette="roxo"] {
+  --signal: #C77DFF;
+  --signal-ink: #C77DFF;
+  --data: #FF2BD6;
+  --pink: #39FF9F;
+  --on-signal: #12051F;
+}
+
+/* Modo recrutador (tema claro): limpo, sem 3D */
+:root.classic {
+  --bg: #F5F2FB;
+  --bg-2: #ECE6F7;
+  --panel: #FFFFFF;
+  --panel-solid: #FFFFFF;
+  --fg: #1A1030;
+  --muted: #564B70;
+  --line: #DDD3EE;
+  --signal: #0B8A52;
+  --signal-ink: #0B7A47;
+  --data: #6B2FD0;
+  --pink: #B0237F;
+  --on-signal: #FFFFFF;
+  color-scheme: light;
+}

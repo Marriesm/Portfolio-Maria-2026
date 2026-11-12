@@ -1,0 +1,57 @@
+.cmdk {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(4, 2, 10, .6);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: start center;
+  padding: 14vh 16px 16px;
+}
+.cmdk[hidden] {
+  display: none;
+}
+.cmdk .box {
+  width: min(560px, 100%);
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 0 60px color-mix(in srgb, var(--data) 35%, transparent);
+  overflow: hidden;
+}
+.cmdk input {
+  width: 100%;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 16px 18px;
+  color: var(--fg);
+  font-family: var(--f-mono);
+  font-size: 15px;
+  outline: none;
+}
+.cmdk ul {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  max-height: 50vh;
+  overflow: auto;
+}
+.cmdk li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.cmdk li small {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.cmdk li.on {
+  background: color-mix(in srgb, var(--signal) 16%, transparent);
+  color: var(--fg);
+}

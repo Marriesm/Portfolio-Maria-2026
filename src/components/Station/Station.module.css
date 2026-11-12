@@ -1,0 +1,87 @@
+.station {
+  min-height: 115vh;
+  display: flex;
+  align-items: center;
+  padding-block: 120px;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(64px, env(safe-area-inset-right, 0px));
+}
+.station.right {
+  justify-content: flex-end;
+}
+:global(:root.classic) .station {
+  min-height: 0;
+  padding-block: 72px;
+  justify-content: center;
+}
+
+.panel {
+  width: min(620px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 30px;
+  backdrop-filter: blur(14px);
+  position: relative;
+  min-width: 0;
+}
+:global(:root.classic) .panel {
+  width: min(980px, 100%);
+  backdrop-filter: none;
+  box-shadow: 0 1px 3px rgba(26, 16, 48, .06);
+}
+/* cantoneiras: verde em cima à esquerda, rosa embaixo à direita */
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--signal), var(--signal)) top left / 22px 2px no-repeat,
+    linear-gradient(var(--signal), var(--signal)) top left / 2px 22px no-repeat,
+    linear-gradient(var(--pink), var(--pink)) bottom right / 22px 2px no-repeat,
+    linear-gradient(var(--pink), var(--pink)) bottom right / 2px 22px no-repeat;
+}
+
+.sector {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--signal-ink);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.sector::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line), transparent);
+}
+
+.panel h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.panel p {
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+@media (max-width: 820px) {
+  .station,
+  .station.right {
+    justify-content: center;
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+    min-height: 0;
+    padding-block: 90px;
+  }
+  .panel {
+    padding: 22px;
+  }
+}

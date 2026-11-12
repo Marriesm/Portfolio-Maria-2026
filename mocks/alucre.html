@@ -1,0 +1,97 @@
+<!doctype html>
+<!-- Alucre: controle de cartões, faturas e gastos pessoais (dados fictícios). Gera src/assets/projetos/alucre-1.png -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Alucre (mock)</title>
+<style>
+  :root { --bg: #0e1412; --panel: #151d1a; --panel-2: #1c2622; --line: #26332e; --ink: #ecf5f1; --muted: #8aa39a;
+    --green: #34d399; --lime: #a3e635; --pink: #f472b6; --amber: #fbbf24; --blue: #60a5fa; }
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 1600px; height: 1000px; overflow: hidden; background: var(--bg); color: var(--ink);
+    font: 14px/1.4 "Segoe UI", system-ui, sans-serif; display: grid; grid-template-columns: 230px 1fr; }
+  .side { background: #0b100e; border-right: 1px solid var(--line); padding: 24px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .logo { font-weight: 800; font-size: 22px; margin: 0 10px 22px; }
+  .logo span { color: var(--green); }
+  .side a { padding: 11px 12px; border-radius: 10px; color: var(--muted); text-decoration: none; }
+  .side a.on { background: rgba(52,211,153,.12); color: var(--green); font-weight: 600; }
+  .main { padding: 26px 30px; display: grid; gap: 18px; align-content: start; }
+  .hd { display: flex; align-items: center; gap: 12px; }
+  .hd h1 { margin: 0; font-size: 24px; }
+  .grow { flex: 1; }
+  .seg { display: flex; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+  .seg span { padding: 7px 14px; border-radius: 8px; color: var(--muted); }
+  .seg .on { background: var(--panel-2); color: var(--ink); }
+  .btn { padding: 10px 16px; border-radius: 10px; font-weight: 700; background: var(--green); color: #052e1f; }
+  .top { display: grid; grid-template-columns: 420px 1fr; gap: 18px; }
+  .cc { height: 240px; border-radius: 22px; padding: 24px; position: relative; overflow: hidden; color: #fff;
+    background: radial-gradient(circle at 85% 10%, rgba(255,255,255,.25), transparent 40%), linear-gradient(135deg, #059669, #0f766e 55%, #134e4a); box-shadow: 0 20px 40px -20px #059669; }
+  .cc .chip { width: 46px; height: 34px; border-radius: 7px; background: linear-gradient(135deg, #fde68a, #d4a017); margin: 26px 0 22px; }
+  .cc .num { font: 600 20px "Consolas", monospace; letter-spacing: 3px; }
+  .cc .row { display: flex; justify-content: space-between; margin-top: 18px; font-size: 13px; opacity: .9; }
+  .cc .brand { position: absolute; right: 22px; top: 20px; font-weight: 800; font-style: italic; }
+  .limit { margin-top: 14px; }
+  .bar { height: 8px; border-radius: 4px; background: var(--panel-2); margin-top: 8px; }
+  .bar i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--green), var(--lime)); }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-content: start; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+  .card small { color: var(--muted); }
+  .card .v { font-size: 26px; font-weight: 800; margin-top: 4px; }
+  .card .d { font-size: 12.5px; }
+  .mid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; }
+  .card h3 { margin: 0 0 14px; font-size: 15px; }
+  .cats { display: grid; gap: 12px; }
+  .cat { display: grid; grid-template-columns: 26px 140px 1fr 90px; gap: 12px; align-items: center; }
+  .cat .ic { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-size: 13px; }
+  .cat .tr { height: 10px; border-radius: 5px; background: var(--panel-2); }
+  .cat .tr i { display: block; height: 100%; border-radius: 5px; }
+  .cat b { text-align: right; }
+  .inv { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
+  .inv:first-of-type { border-top: 0; }
+  .st { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+  .tl { display: flex; align-items: flex-end; gap: 10px; height: 150px; }
+  .tl div { flex: 1; border-radius: 8px 8px 3px 3px; background: linear-gradient(180deg, var(--green), #065f46); position: relative; }
+  .tl div span { position: absolute; bottom: -22px; left: 0; right: 0; text-align: center; font-size: 11.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+  <aside class="side">
+    <div class="logo">Alu<span>cre</span></div>
+    <a>📊 Visão geral</a><a>🛒 Vendas</a><a>📦 Estoque</a><a>👛 Gastos pessoais</a><a class="on">💳 Cartões</a><a>⚙ Configurações</a>
+  </aside>
+  <main class="main">
+    <div class="hd"><h1>Cartões e faturas</h1><span class="grow"></span>
+      <div class="seg"><span>Mês</span><span class="on">3 meses</span><span>Ano</span></div><span class="btn">+ Nova compra</span></div>
+
+    <div class="top">
+      <div>
+        <div class="cc"><span class="brand">VISA</span><div>Cartão Exemplo</div><div class="chip"></div>
+          <div class="num">•••• •••• •••• 0000</div><div class="row"><span>MARIA EXEMPLO</span><span>fecha dia 05 · vence dia 12</span></div></div>
+        <div class="limit"><div style="display:flex"><small style="color:var(--muted)">Limite usado</small><span class="grow"></span><b>R$ 1.840 de R$ 4.000</b></div><div class="bar"><i style="width:46%"></i></div></div>
+      </div>
+      <div class="kpis">
+        <div class="card"><small>Fatura atual</small><div class="v">R$ 1.840,00</div><span class="d" style="color:var(--amber)">fecha em 6 dias</span></div>
+        <div class="card"><small>Gastos pessoais no mês</small><div class="v">R$ 2.315,40</div><span class="d" style="color:var(--green)">▼ 8% vs. mês passado</span></div>
+        <div class="card"><small>Parcelas futuras</small><div class="v">R$ 960,00</div><span class="d" style="color:var(--muted)">em 4 compras parceladas</span></div>
+        <div class="card" style="grid-column:1/-1"><h3>Faturas nos últimos meses</h3>
+          <div class="tl">${""}</div></div>
+      </div>
+    </div>
+
+    <div class="mid">
+      <div class="card"><h3>Gastos por categoria</h3><div class="cats" id="cats"></div></div>
+      <div class="card"><h3>Faturas</h3><div id="inv"></div></div>
+    </div>
+  </main>
+<script>
+  const fat = [["jul", 62], ["ago", 74], ["set", 55], ["out", 88], ["nov", 70]];
+  document.querySelector(".tl").innerHTML = fat.map(([m, h]) => `<div style="height:${h}%"><span>${m}</span></div>`).join("");
+  const cats = [["🍽", "Alimentação", 34, "#34d399", "R$ 612,30"], ["🚗", "Transporte", 22, "#60a5fa", "R$ 398,00"], ["🛍", "Compras", 18, "#f472b6", "R$ 324,90"],
+                ["🎬", "Lazer", 14, "#fbbf24", "R$ 251,20"], ["💡", "Contas da casa", 12, "#a3e635", "R$ 216,00"]];
+  document.getElementById("cats").innerHTML = cats.map(([i, n, p, c, v]) => `<div class="cat"><span class="ic" style="background:${c}22">${i}</span><span>${n}</span>
+    <div class="tr"><i style="width:${p * 2.6}%;background:${c}"></i></div><b>${v}</b></div>`).join("");
+  const inv = [["Novembro", "R$ 1.840,00", "aberta", "#fbbf24"], ["Outubro", "R$ 2.210,50", "paga", "#34d399"], ["Setembro", "R$ 1.395,10", "paga", "#34d399"], ["Agosto", "R$ 1.880,00", "paga", "#34d399"]];
+  document.getElementById("inv").innerHTML = inv.map(([m, v, s, c]) => `<div class="inv"><span>${m}</span><b>${v}</b><span class="st" style="background:${c}22;color:${c}">${s}</span></div>`).join("");
+</script>
+</body>
+</html>

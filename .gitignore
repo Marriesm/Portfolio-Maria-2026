@@ -1,0 +1,10 @@
+node_modules
+dist
+*.local
+.vercel
+.vscode
+
+# só local: telas quase iguais às do trabalho e cópia do portfólio antigo (não publicar)
+mocks/versao-fiel/
+imagens-versao-fiel/
+reference/

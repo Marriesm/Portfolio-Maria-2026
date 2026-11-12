@@ -1,0 +1,106 @@
+<!doctype html>
+<!-- OdontoPro: agendamento público + painel da clínica (clínica e pacientes fictícios). Gera src/assets/projetos/odonto-pro-1.png -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>OdontoPro (mock)</title>
+<style>
+  :root { --green: #10c48a; --green-d: #0a9a6c; --ink: #101418; --muted: #6b7280; --line: #e7ebef; --bg: #f6f8fa; }
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 1600px; height: 1000px; overflow: hidden; background: var(--bg); color: var(--ink);
+    font: 14px/1.4 "Segoe UI", system-ui, sans-serif; display: grid; grid-template-columns: 560px 1fr; }
+  .logo { font-weight: 800; font-size: 22px; }
+  .logo span { color: var(--green); }
+
+  /* lado público: página da clínica */
+  .pub { background: #fff; border-right: 1px solid var(--line); padding: 26px 30px; display: flex; flex-direction: column; gap: 18px; }
+  .cover { height: 150px; border-radius: 16px; background: linear-gradient(135deg, #d9fbe9, #b8f0d7); position: relative; }
+  .cover .av { position: absolute; left: 22px; bottom: -34px; width: 78px; height: 78px; border-radius: 50%; background: #fff;
+    border: 4px solid #fff; box-shadow: 0 6px 18px rgba(0,0,0,.08); display: grid; place-items: center; font-size: 32px; }
+  .pub h2 { margin: 26px 0 0; font-size: 22px; }
+  .muted { color: var(--muted); }
+  .field { display: grid; gap: 6px; }
+  .field small { font-weight: 600; }
+  .field span { padding: 11px 14px; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); }
+  .slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .slots span { text-align: center; padding: 10px 0; border: 1px solid var(--line); border-radius: 10px; font-weight: 600; }
+  .slots .on { background: var(--green); border-color: var(--green); color: #fff; }
+  .slots .off { color: #c1c7cf; text-decoration: line-through; }
+  .cta { margin-top: auto; text-align: center; padding: 14px; border-radius: 12px; background: var(--green); color: #fff; font-weight: 700; font-size: 15px; }
+
+  /* lado do painel */
+  .panel { display: grid; grid-template-columns: 220px 1fr; }
+  .side { background: #0f1720; color: #cbd5e1; padding: 24px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .side .logo { color: #fff; margin: 0 8px 18px; }
+  .side span { padding: 10px 12px; border-radius: 10px; }
+  .side .on { background: rgba(16,196,138,.15); color: #6ee7b7; font-weight: 600; }
+  .side .plan { margin-top: auto; padding: 14px; border-radius: 12px; background: linear-gradient(135deg, #10c48a, #0a9a6c); color: #fff; }
+  .side .plan small { display: block; opacity: .85; }
+  .main { padding: 26px 30px; display: grid; gap: 18px; align-content: start; }
+  .head { display: flex; align-items: center; gap: 12px; }
+  .head h1 { margin: 0; font-size: 22px; }
+  .head .grow { flex: 1; }
+  .btn { padding: 10px 16px; border-radius: 10px; background: var(--ink); color: #fff; font-weight: 600; }
+  .btn.g { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .kpi { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .kpi small { color: var(--muted); }
+  .kpi b { display: block; font-size: 26px; }
+  .cols { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .card h3 { margin: 0 0 12px; font-size: 16px; }
+  .ap { display: grid; grid-template-columns: 70px 1fr auto; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
+  .ap:first-of-type { border-top: 0; }
+  .ap b { font-size: 15px; }
+  .tag { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #e8faf2; color: var(--green-d); }
+  .rem { padding: 12px; border-radius: 10px; background: #fff8e6; border: 1px solid #fde4a3; margin-bottom: 10px; }
+  .svc { display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+  <section class="pub">
+    <div class="logo">Odonto<span>Pro</span></div>
+    <div class="cover"><div class="av">🦷</div></div>
+    <div><h2>Clínica Sorriso Mock</h2><span class="muted">Rua Exemplo, 000 · Cidade Mock</span></div>
+    <div class="field"><small>Nome completo</small><span>Paciente Mock</span></div>
+    <div class="field"><small>Serviço</small><span>Limpeza · 40 min · R$ 000,00</span></div>
+    <div class="field"><small>Data</small><span>📅 qua, 00/00</span></div>
+    <div><small style="font-weight:600">Horários disponíveis</small>
+      <div class="slots" style="margin-top:8px"><span>08:00</span><span class="off">08:30</span><span>09:00</span><span class="on">09:30</span>
+        <span>10:00</span><span class="off">10:30</span><span>14:00</span><span>14:30</span></div></div>
+    <div class="cta">Agendar horário →</div>
+  </section>
+
+  <section class="panel">
+    <aside class="side">
+      <div class="logo">Odonto<span style="color:#10c48a">Pro</span></div>
+      <span class="on">📅 Agendamentos</span><span>🦷 Serviços</span><span>👤 Meu perfil</span><span>💳 Planos</span>
+      <div class="plan"><b>Plano Professional</b><small>assinatura via Stripe · ativa</small></div>
+    </aside>
+    <div class="main">
+      <div class="head"><h1>Agendamentos</h1><span class="grow"></span><span class="btn g">🔗 Link público da clínica</span><span class="btn">+ Novo serviço</span></div>
+      <div class="kpis">
+        <div class="kpi"><small>Hoje</small><b>00</b></div>
+        <div class="kpi"><small>Esta semana</small><b>00</b></div>
+        <div class="kpi"><small>Serviços ativos</small><b>0</b></div>
+      </div>
+      <div class="cols">
+        <div class="card"><h3>Agenda de qua, 00/00</h3>
+          <div class="ap"><b>08:00</b><div>Paciente Mock 1<br><small class="muted">Avaliação</small></div><span class="tag">confirmado</span></div>
+          <div class="ap"><b>09:30</b><div>Paciente Mock 2<br><small class="muted">Limpeza</small></div><span class="tag">novo</span></div>
+          <div class="ap"><b>14:00</b><div>Paciente Mock 3<br><small class="muted">Clareamento</small></div><span class="tag">confirmado</span></div>
+          <div class="ap"><b>15:30</b><div>Paciente Mock 4<br><small class="muted">Restauração</small></div><span class="tag">confirmado</span></div>
+        </div>
+        <div class="card"><h3>Lembretes</h3>
+          <div class="rem">Confirmar retorno do Paciente Mock 2</div>
+          <div class="rem">Repor material de clareamento</div>
+          <h3 style="margin-top:18px">Serviços</h3>
+          <div class="svc"><span>Avaliação</span><b>R$ 000</b></div>
+          <div class="svc"><span>Limpeza</span><b>R$ 000</b></div>
+          <div class="svc"><span>Clareamento</span><b>R$ 000</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

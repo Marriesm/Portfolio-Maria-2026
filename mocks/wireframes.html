@@ -1,0 +1,233 @@
+<!doctype html>
+<!--
+  Telas de demonstração dos projetos profissionais: layouts próprios, diferentes de qualquer produto real,
+  com dados 100% fictícios. Use ?t=jornada | copiloto | historico | agenda | avaliacao | cobranca | chat
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Demonstração</title>
+<style>
+  :root { --bg: #110e15; --card: #1c1822; --ink: #f4eef6; --muted: #9b8fa3; --line: #2c2533;
+    --rose: #f2507e; --coral: #ff8a5b; --peach: #3a1f27; --mint: #2dd4bf; --mint-l: #0f2f2b; --sun: #f6c050; --sun-l: #33290f; --plum: #a78bfa; --plum-l: #261d3d; }
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 1600px; height: 1000px; overflow: hidden; color: var(--ink); font: 15px/1.4 "Segoe UI", system-ui, sans-serif;
+    background: radial-gradient(circle at 92% -8%, rgba(242,80,126,.28) 0, transparent 40%), radial-gradient(circle at 30% 115%, rgba(123,79,214,.30) 0, transparent 45%), radial-gradient(circle at 55% 40%, rgba(255,138,91,.07) 0, transparent 55%), var(--bg); }
+  body::after { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .35;
+    background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px); background-size: 3px 3px; }
+  .app { display: grid; grid-template-columns: 84px 1fr; height: 100%; }
+  .rail { border-right: 1px solid var(--line); background: linear-gradient(180deg, #17121c, #0d0a10); display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 22px 0; }
+  .rail .logo { width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, var(--rose), var(--coral)); }
+  .rail i { width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,.06); display: grid; place-items: center; font-style: normal; font-size: 19px; filter: grayscale(.4); }
+  .rail i.on { background: linear-gradient(135deg, rgba(232,67,111,.45), rgba(255,138,91,.45)); filter: none; box-shadow: 0 6px 18px -6px #f2507e; }
+  .page { padding: 30px 36px; display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+  .hd { display: flex; align-items: center; gap: 14px; }
+  .hd h1 { margin: 0; font-size: 28px; letter-spacing: -.01em; }
+  .hd p { margin: 2px 0 0; color: var(--muted); }
+  .grow { flex: 1; }
+  .btn { padding: 11px 18px; border-radius: 999px; font-weight: 600; background: var(--ink); color: var(--bg); }
+  .btn.r { background: linear-gradient(135deg, var(--rose), var(--coral)); color: #fff; box-shadow: 0 8px 24px -8px var(--rose); }
+  .btn.o { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+  .card { background: linear-gradient(160deg, rgba(36,30,44,.92), rgba(24,20,30,.92)); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.06); border-radius: 22px; padding: 22px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 24px 50px -28px rgba(0,0,0,.9); }
+  .hd h1 em { font-style: normal; background: linear-gradient(135deg, var(--rose), var(--coral)); -webkit-background-clip: text; color: transparent; }
+  .dark { background: linear-gradient(135deg, #2d1426, #3d1a35 55%, #2a1838); color: #fff; border: 1px solid rgba(242,80,126,.45);
+    box-shadow: 0 0 40px -10px rgba(242,80,126,.45), inset 0 1px 0 rgba(255,255,255,.08); }
+  .spark { display: block; width: 100%; height: 46px; margin-top: 8px; }
+  .muted { color: var(--muted); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 600; }
+  .av { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: #fff; flex: none; }
+  h3 { margin: 0; font-size: 17px; }
+  .k { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="app"><nav class="rail"><div class="logo"></div><i class="on">◎</i><i>📊</i><i>💬</i><i>📅</i><i>⚙</i></nav><main class="page" id="p"></main></div>
+<script>
+const t = new URLSearchParams(location.search).get("t") || "jornada";
+const C = ["#f2507e", "#a78bfa", "#2dd4bf", "#ff8a5b", "#2a6fdb", "#f6c050"];
+const spark = (pts, c) => `<svg class="spark" viewBox="0 0 200 46" preserveAspectRatio="none"><defs><linearGradient id="s${c.slice(1)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".35"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs>
+  <path d="M0 46 ${pts.map((v, i) => `L${(i * 200) / (pts.length - 1)} ${46 - v * 0.42}`).join(" ")} L200 46 Z" fill="url(#s${c.slice(1)})"/><path d="${pts.map((v, i) => `${i ? "L" : "M"}${(i * 200) / (pts.length - 1)} ${46 - v * 0.42}`).join(" ")}" fill="none" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/></svg>`;
+const av = (n, i) => `<span class="av" style="background:${C[i % C.length]}">${n}</span>`;
+const V = {
+// 1. jornada: linhas de clientes atravessando as etapas
+jornada: () => `
+<div class="hd"><div><h1>Jornada dos <em>clientes</em></h1><p>Do primeiro contato ao uso pleno do produto</p></div><span class="grow"></span>
+  <span class="chip" style="background:var(--peach);color:var(--rose)">● 2 precisam de atenção</span><span class="btn r">+ Novo cliente</span></div>
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="display:grid;grid-template-columns:280px repeat(4,1fr) 150px;padding:16px 22px;background:#1f1a25;border-bottom:1px solid var(--line)" class="k">
+    <span>Cliente</span><span>Boas-vindas</span><span>Configuração</span><span>Treinamento</span><span>Uso pleno</span><span>Próximo passo</span></div>
+  ${[["Aurora Café", 4, "#2dd4bf", "Concluído"], ["Bela Ótica", 2, "#f2507e", "Sem resposta há 6 dias"], ["Casa Verde", 3, "#a78bfa", "Treinamento qui 14h"],
+     ["Delta Fitness", 1, "#f6c050", "Agendar configuração"], ["Estúdio Lume", 3, "#a78bfa", "Revisar automações"], ["Flor de Sal", 2, "#f2507e", "Parado há 9 dias"]]
+    .map(([n, s, c, next], i) => `<div style="display:grid;grid-template-columns:280px repeat(4,1fr) 150px;align-items:center;padding:16px 22px;border-bottom:1px solid var(--line)">
+      <div style="display:flex;gap:12px;align-items:center">${av(n.split(" ").map((w) => w[0]).join(""), i)}<div><b>${n}</b><br><small class="muted">Plano ${["Essencial", "Pro", "Plus"][i % 3]}</small></div></div>
+      ${[1, 2, 3, 4].map((k) => `<div style="display:flex;align-items:center"><span style="width:22px;height:22px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:12px;color:#fff;background:${k < s ? c : k === s ? "#fff" : "#2e2735"};border:3px solid ${k <= s ? c : "#2e2735"}">${k < s ? "✓" : ""}</span>
+        ${k < 4 ? `<span style="flex:1;height:4px;background:${k < s ? c : "#2e2735"};${k < s ? `box-shadow:0 0 12px ${c}` : ""}"></span>` : ""}</div>`).join("")}
+      <span class="chip" style="background:${c}1f;color:${c};justify-self:start">${next}</span></div>`).join("")}
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+  ${[["Tempo médio até o uso pleno", "18 dias", "#2dd4bf"], ["Clientes em andamento", "42", "#a78bfa"], ["Roteiros gerados por IA", "126", "#f2507e"]]
+    .map(([l, v, c], i) => `<div class="card"><span class="k">${l}</span><div style="font-size:34px;font-weight:800;color:${c}">${v}</div>${spark([[60, 55, 52, 48, 40, 36, 30], [20, 28, 26, 34, 38, 40, 42], [10, 25, 38, 52, 70, 88, 100]][i], c)}</div>`).join("")}
+</div>
+<div class="card dark" style="display:flex;align-items:center;gap:22px;padding:22px 26px">
+  <span style="width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,#f2507e,#ff8a5b)">✦</span>
+  <div><span class="k" style="color:#d8c4d6">Insight da IA</span><div style="font-size:19px;font-weight:700;margin-top:2px">Clientes que fazem o treinamento na 1ª semana chegam ao uso pleno 2× mais rápido.</div></div>
+  <span class="grow"></span><span class="btn r">Ver recomendação</span></div>`,
+
+// 2. co-piloto: cartões de fala empilhados + checklist
+copiloto: () => `
+<div class="hd"><div><h1><em>Co-piloto</em> da reunião</h1><p>Aurora Café · Treinamento · ao vivo há 12 min</p></div><span class="grow"></span>
+  <span class="chip" style="background:var(--mint-l);color:var(--mint)">● gravando</span><span class="btn o">Encerrar</span></div>
+<div style="display:grid;grid-template-columns:360px 1fr;gap:24px;flex:1;min-height:0">
+  <div class="card"><span class="k">Roteiro gerado por IA</span>
+    ${["Apresentar o painel principal", "Cadastrar a equipe", "Criar a primeira automação", "Mostrar os relatórios", "Combinar o próximo passo"]
+      .map((x, i) => `<div style="display:flex;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)"><span style="width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:13px;color:#fff;background:${i < 2 ? "var(--mint)" : i === 2 ? "var(--rose)" : "#2e2735"}">${i < 2 ? "✓" : i + 1}</span>
+        <span style="${i < 2 ? "color:var(--muted);text-decoration:line-through" : i === 2 ? "font-weight:700" : ""}">${x}</span></div>`).join("")}
+    <div style="margin-top:16px;padding:14px;border-radius:14px;background:var(--plum-l);color:var(--plum);font-size:13.5px">✦ Itens não tratados entram no roteiro da próxima reunião.</div>
+    <div class="k" style="margin-top:22px">Perfil do cliente (IA)</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">${["Cafeteria", "3 atendentes", "pico no almoço", "quer vender pelo chat", "iniciante"].map((x, i) => `<span class="chip" style="background:${["#3a1f27", "#0f2f2b", "#33290f", "#261d3d", "#2e2735"][i]};color:${["#f2507e", "#2dd4bf", "#f6c050", "#a78bfa", "#8a7d8f"][i]}">${x}</span>`).join("")}</div></div>
+  <div style="position:relative">
+    <div class="card" style="position:absolute;inset:40px 40px auto 40px;height:400px;transform:rotate(-2.5deg);opacity:.5"></div>
+    <div class="card" style="position:absolute;inset:20px 20px auto 20px;height:420px;transform:rotate(1.5deg);opacity:.75"></div>
+    <div class="card" style="position:absolute;inset:0;height:440px;padding:30px;display:flex;flex-direction:column;gap:18px;border:2px solid var(--rose)">
+      <div style="display:flex;gap:10px;align-items:center"><span class="chip" style="background:var(--peach);color:var(--rose)">3 de 5</span><span class="muted">~4 min</span></div>
+      <h2 style="margin:0;font-size:30px;line-height:1.2">Criar a primeira automação junto com o cliente</h2>
+      <div style="padding:18px 20px;border-radius:16px;background:#1f1a25;font-size:18px;border-left:4px solid var(--coral)">“Vamos montar agora uma resposta automática para a pergunta que mais chega, assim você já sai daqui com ela funcionando.”</div>
+      <div class="k">Pergunte</div>
+      <div>• Qual pergunta seus clientes mais fazem?<br>• Em que horário vocês recebem mais mensagens?</div>
+      <span class="grow"></span>
+      <div style="display:flex;gap:12px"><span class="btn o">Pular</span><span class="grow"></span><span class="btn" style="background:var(--mint)">✓ Feito</span></div></div>
+    <div class="card dark" style="position:absolute;left:0;right:0;bottom:0;height:250px;display:grid;grid-template-columns:1fr 260px;gap:22px;align-items:center">
+      <div><span class="k" style="color:#d8c4d6">Transcrição ao vivo</span>
+        <p style="margin:10px 0 0;font-size:16px;line-height:1.6;color:#f3e9f1"><b style="color:#ff8a5b">Cliente:</b> a pergunta que mais chega é sobre o horário de funcionamento…<br><b style="color:#7ee8d9">Você:</b> perfeito, então vamos começar por ela. Olha só como fica…</p></div>
+      <div style="display:flex;align-items:center;gap:4px;height:90px">${Array.from({ length: 34 }, (_, i) => `<span style="flex:1;border-radius:3px;background:linear-gradient(180deg,#ff8a5b,#f2507e);height:${18 + Math.abs(Math.sin(i * 0.9) * 70) + (i % 5) * 4}%"></span>`).join("")}</div>
+    </div>
+  </div>
+</div>`,
+
+// 3. histórico: barras empilhadas por dia + fluxos
+historico: () => `
+<div class="hd"><div><h1>Saúde da base ao longo do <em>tempo</em></h1><p>Foto diária reconstruída com backfill · últimos 14 dias</p></div><span class="grow"></span><span class="btn o">14 dias ▾</span><span class="btn">Exportar</span></div>
+<div style="display:grid;grid-template-columns:1.5fr 1fr;gap:22px;flex:1;min-height:0">
+  <div class="card" style="display:flex;flex-direction:column"><div style="display:flex;gap:16px;align-items:center"><h3>Distribuição diária</h3><span class="grow"></span>
+    ${[["Saudável", "#2dd4bf"], ["Atenção", "#f6c050"], ["Crítico", "#f2507e"]].map(([l, c]) => `<span class="chip" style="background:${c}1f;color:${c}">■ ${l}</span>`).join("")}</div>
+    <div style="display:flex;align-items:flex-end;gap:12px;flex:1;margin-top:24px;padding-bottom:30px;position:relative">
+      ${Array.from({ length: 14 }, (_, i) => { const r = 6 + Math.round(i * i * 0.12), y = 12 + Math.round(i * 0.4), g = 100 - r - y;
+        return `<div style="flex:1;display:flex;flex-direction:column;height:100%;border-radius:10px;overflow:hidden;position:relative">
+          <div style="height:${r}%;background:#f2507e"></div><div style="height:${y}%;background:#f6c050"></div><div style="flex:1;background:#2dd4bf${i < 9 ? "99" : ""}"></div>
+          <small class="muted" style="position:absolute;bottom:-26px;left:0;right:0;text-align:center">D${i - 13 || ""}</small></div>`; }).join("")}
+      <span style="position:absolute;left:63%;top:-8px;bottom:22px;border-left:2px dashed var(--plum)"></span>
+      <span class="chip" style="position:absolute;left:44%;top:-6px;background:var(--plum-l);color:var(--plum)">backfill ← → foto diária</span>
+    </div></div>
+  <div style="display:grid;gap:18px;align-content:start">
+    <div class="card"><h3>Para onde os clientes foram</h3>
+      ${[["Saudável", "Atenção", 38, "#2dd4bf", "#f6c050"], ["Atenção", "Crítico", 21, "#f6c050", "#f2507e"], ["Saudável", "Crítico", 9, "#2dd4bf", "#f2507e"], ["Crítico", "Saudável", 14, "#f2507e", "#2dd4bf"], ["Atenção", "Saudável", 26, "#f6c050", "#2dd4bf"]]
+        .map(([a, b, n, ca, cb]) => `<div style="display:grid;grid-template-columns:90px 1fr 90px 44px;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)">
+          <span class="chip" style="background:${ca}1f;color:${ca}">${a}</span><span style="height:8px;border-radius:4px;background:linear-gradient(90deg,${ca},${cb});width:${n * 2.2}%"></span>
+          <span class="chip" style="background:${cb}1f;color:${cb}">${b}</span><b style="text-align:right">${n}</b></div>`).join("")}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">${[["Retenção no mês", "94,2%", "#2dd4bf", [70, 72, 74, 73, 76, 78, 80]], ["Clientes em risco", "38", "#f2507e", [20, 22, 21, 26, 30, 34, 38]]]
+      .map(([l, v, c, pts]) => `<div class="card"><span class="k">${l}</span><div style="font-size:30px;font-weight:800;color:${c}">${v}</div>${spark(pts, c)}</div>`).join("")}</div>
+    <div class="card" style="background:linear-gradient(135deg,#f2507e,#ff8a5b);color:#fff;box-shadow:0 8px 22px -8px #f2507e"><span class="k" style="color:#ffe1e8">Principal motivo de piora</span><div style="font-size:24px;font-weight:800;margin-top:6px">Queda de uso semanal</div><small style="color:#c9b2c4">em 41% das transições para crítico</small></div>
+  </div>
+</div>`,
+
+// 4. agenda: assistente em 3 passos com calendário mensal
+agenda: () => `
+<div class="hd"><div><h1>Agendar <em>reunião</em></h1><p>Sincronizado com a agenda da equipe</p></div><span class="grow"></span><span class="chip" style="background:var(--mint-l);color:var(--mint)">● Agenda conectada</span></div>
+<div style="display:flex;gap:12px">${["Cliente", "Data e horário", "Convite"].map((s, i) => `<div style="flex:1;display:flex;gap:12px;align-items:center;padding:14px 18px;border-radius:16px;background:${i === 1 ? "linear-gradient(135deg,#f2507e,#ff8a5b)" : "#241f2b"};color:#fff;${i === 1 ? "box-shadow:0 10px 26px -10px #f2507e" : ""}">
+  <span style="width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:${i === 0 ? "var(--mint)" : i === 1 ? "var(--coral)" : "#2e2735"};color:#fff">${i === 0 ? "✓" : i + 1}</span><b>${s}</b></div>`).join("")}</div>
+<div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:22px;flex:1;min-height:0">
+  <div class="card"><div style="display:flex;align-items:center"><h3>Novembro</h3><span class="grow"></span><span class="muted">‹ ›</span></div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:18px;text-align:center">
+      ${["D", "S", "T", "Q", "Q", "S", "S"].map((d) => `<small class="muted" style="font-weight:700">${d}</small>`).join("")}
+      ${Array.from({ length: 35 }, (_, i) => { const d = i - 2; const ok = d > 0 && d <= 30, sel = d === 19, free = [12, 13, 18, 19, 20, 25, 26].includes(d);
+        return `<div style="height:54px;border-radius:14px;display:grid;place-items:center;font-weight:600;${!ok ? "opacity:0" : sel ? "background:linear-gradient(135deg,#f2507e,#ff8a5b);color:#fff" : free ? "background:var(--mint-l);color:var(--mint)" : "color:#4f4558"}">${ok ? d : ""}</div>`; }).join("")}</div>
+    <div class="k" style="margin-top:22px">Próximas reuniões</div>
+    ${[["Casa Verde", "Treinamento", "qui 14:00", "#a78bfa"], ["Estúdio Lume", "Revisão", "sex 10:30", "#2dd4bf"], ["Bela Ótica", "Configuração", "seg 09:00", "#f2507e"]]
+      .map(([n, t, h, c]) => `<div style="display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)"><span style="width:4px;height:34px;border-radius:2px;background:${c};box-shadow:0 0 10px ${c}"></span>
+        <div><b>${n}</b><br><small class="muted">${t}</small></div><span class="grow"></span><span class="chip" style="background:${c}22;color:${c}">${h}</span></div>`).join("")}</div>
+  <div class="card"><h3>Horários livres · qua, 19</h3><p class="muted" style="margin:4px 0 16px">Só aparecem os horários sem conflito</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">${["09:00", "09:30", "10:30", "11:00", "14:00", "15:00", "15:30", "16:30"].map((h, i) => `<div style="padding:13px;border-radius:14px;text-align:center;font-weight:700;${i === 5 ? "background:linear-gradient(135deg,#f2507e,#ff8a5b);color:#fff;box-shadow:0 8px 22px -8px #f2507e" : "border:1.5px solid var(--line)"}">${h}</div>`).join("")}</div>
+    <div class="k" style="margin-top:24px">Participantes</div>
+    ${[["AM", "Ana Mock", "responsável"], ["IA", "Assistente IA", "anotações"], ["AC", "Aurora Café", "cliente"]].map(([a, n, r], i) => `<div style="display:flex;gap:12px;align-items:center;padding:10px 0">
+      ${av(a, i + 2)}<div><b>${n}</b><br><small class="muted">${r}</small></div></div>`).join("")}
+    <div style="margin-top:14px;padding:14px;border-radius:14px;background:var(--mint-l);color:var(--mint);font-size:13.5px">✓ Nenhum conflito com outras reuniões da equipe</div></div>
+  <div class="card" style="display:flex;flex-direction:column;gap:14px"><h3>Resumo do convite</h3>
+    <div style="padding:16px;border-radius:16px;background:#1f1a25"><span class="k">Título padronizado</span><div style="font-weight:700;margin-top:4px">#0421 · Aurora Café · Treinamento</div></div>
+    <div>📅 qua, 19 nov · 15:00–16:00</div><div>🎥 Link de videochamada automático</div><div>✉ Convite para 3 participantes</div><div>🔔 Lembrete 1 h antes para o cliente</div>
+    <div class="card dark" style="padding:18px;margin-top:6px"><span class="k" style="color:#c9b2c4">✦ Sugestão da IA</span><div style="margin-top:6px">Este cliente costuma confirmar mais rápido em reuniões à tarde.</div></div>
+    <span class="grow"></span><span class="btn o" style="text-align:center">↻ Remarcar outro horário</span><span class="btn r" style="text-align:center">Confirmar agendamento</span></div>
+</div>`,
+
+// 5. avaliação: nota circular + mosaico de itens
+avaliacao: () => `
+<div class="hd"><div><h1>Avaliação da reunião <em>por IA</em></h1><p>Casa Verde · Configuração · avaliada por IA a partir da transcrição</p></div><span class="grow"></span><span class="btn o">Pedir reavaliação</span><span class="btn">Ver transcrição</span></div>
+<div style="display:grid;grid-template-columns:380px 1fr;gap:24px;flex:1;min-height:0">
+  <div class="card" style="display:grid;place-items:center;gap:14px;align-content:center">
+    <div style="width:250px;height:250px;border-radius:50%;background:conic-gradient(var(--mint) 0 78%,#2e2735 0);display:grid;place-items:center">
+      <div style="width:200px;height:200px;border-radius:50%;background:#241f2b;display:grid;place-items:center;text-align:center"><div><div style="font-size:64px;font-weight:800;line-height:1">7,8</div><span class="muted">de 10</span></div></div></div>
+    <span class="chip" style="background:var(--mint-l);color:var(--mint)">✓ acima da nota mínima (7,0)</span>
+    <div style="width:100%;display:grid;gap:10px;margin-top:10px">${[["Contexto do negócio", 90], ["Configuração", 75], ["Próximos passos", 60]].map(([l, v]) => `<div><div style="display:flex"><small>${l}</small><span class="grow"></span><small class="muted">${v}%</small></div>
+      <div style="height:8px;border-radius:4px;background:#2e2735"><div style="height:100%;width:${v}%;border-radius:4px;background:linear-gradient(90deg,var(--rose),var(--coral))"></div></div></div>`).join("")}</div></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-content:start">
+    ${[["Entendeu os objetivos do cliente", 1, 1.5], ["Cadastrou a equipe", 1, 0.5], ["Definiu permissões", 1, 0.5], ["Criou a primeira automação", 1, 1], ["Validou o relatório", 0, 0.5], ["Combinou o próximo passo", 1, 1],
+       ["Explicou o suporte", 1, 0.5], ["Revisou integrações", 0, 1], ["Registrou dúvidas", 1, 0.5]]
+      .map(([x, ok, w]) => `<div class="card" style="padding:18px;display:grid;gap:10px;${ok ? "" : "border:2px solid var(--rose)"}">
+        <div style="display:flex;align-items:center"><span style="width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-weight:800;color:#fff;background:${ok ? "var(--mint)" : "var(--rose)"}">${ok ? "✓" : "!"}</span><span class="grow"></span><span class="chip" style="background:#2e2735;color:var(--muted)">peso ${String(w).replace(".", ",")}</span></div>
+        <b>${x}</b><small class="muted" style="font-style:italic">${ok ? "“…" + ["o foco é vender mais pelo chat", "pronto, a equipe já entrou", "só a gerente vê tudo", "já está respondendo sozinho", "", "nos falamos na quinta", "qualquer coisa é só chamar", "", "anotei as dúvidas"][Math.floor(Math.random() * 0) + ["Entendeu os objetivos do cliente", "Cadastrou a equipe", "Definiu permissões", "Criou a primeira automação", "Validou o relatório", "Combinou o próximo passo", "Explicou o suporte", "Revisou integrações", "Registrou dúvidas"].indexOf(x)] + "…”" : "Não encontrado na transcrição · volta na próxima"}</small></div>`).join("")}
+    <div class="card dark" style="grid-column:1/-1;display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center">
+      <span style="width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,#f2507e,#ff8a5b)">✦</span>
+      <div><span class="k" style="color:#d8c4d6">Resumo da IA</span><div style="font-size:17px;margin-top:4px;line-height:1.5">Reunião objetiva: o cliente já saiu com a primeira automação no ar. Faltou validar o relatório e revisar as integrações, que entram no roteiro da próxima conversa.</div></div>
+      <span class="chip" style="background:rgba(255,255,255,.12);color:#fff;font-size:14px;padding:8px 14px">2 itens para a próxima</span></div>
+  </div>
+</div>`,
+
+// 6. cobrança: linha do tempo + tabela
+cobranca: () => `
+<div class="hd"><div><h1>Lembretes de <em>pagamento</em></h1><p>Envios automáticos todos os dias às 09:00</p></div><span class="grow"></span>
+  <span style="display:flex;background:#241f2b;border-radius:999px;padding:4px">${["Desligado", "Teste", "Produção"].map((m, i) => `<span style="padding:8px 16px;border-radius:999px;font-weight:600;${i === 2 ? "background:linear-gradient(135deg,#f2507e,#ff8a5b);color:#fff;box-shadow:0 8px 22px -8px #f2507e" : "color:var(--muted)"}">${m}</span>`).join("")}</span></div>
+<div class="card" style="padding:30px 40px"><div style="display:flex;align-items:flex-start">
+  ${[["D-3", "Lembrete gentil", 48, "#a78bfa"], ["D0", "Vence hoje", 31, "#ff8a5b"], ["D+2", "Aviso de atraso", 12, "#f2507e"], ["Pago", "Regularizado", 164, "#2dd4bf"]]
+    .map(([d, l, n, c], i, a) => `<div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative">
+      ${i < a.length - 1 ? `<span style="position:absolute;top:34px;left:50%;width:100%;height:4px;background:linear-gradient(90deg,${c},${a[i + 1][3]})"></span>` : ""}
+      <span style="position:relative;width:72px;height:72px;border-radius:50%;background:${c};color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;box-shadow:0 0 0 8px ${c}22">${d}</span>
+      <b style="margin-top:14px">${l}</b><span style="font-size:30px;font-weight:800;color:${c}">${n}</span><small class="muted">${i === 3 ? "este mês" : "envios hoje"}</small></div>`).join("")}</div></div>
+<div class="card" style="padding:0;overflow:hidden;flex:1">
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.2fr;padding:14px 24px;background:#1f1a25" class="k"><span>Cliente</span><span>Valor</span><span>Vencimento</span><span>Etapa</span><span>Último envio</span></div>
+  ${[["Aurora Café", "R$ 290,00", "21/11", "D-3", "#a78bfa", "hoje 09:00"], ["Bela Ótica", "R$ 540,00", "18/11", "D0", "#ff8a5b", "hoje 09:00"], ["Delta Fitness", "R$ 190,00", "16/11", "D+2", "#f2507e", "hoje 09:01"],
+     ["Estúdio Lume", "R$ 350,00", "15/11", "Pago", "#2dd4bf", "cancelado (pago)"], ["Flor de Sal", "R$ 420,00", "22/11", "D-3", "#a78bfa", "amanhã 09:00"],
+     ["Grão Fino", "R$ 260,00", "18/11", "D0", "#ff8a5b", "hoje 09:00"], ["Horta Viva", "R$ 310,00", "14/11", "Pago", "#2dd4bf", "cancelado (pago)"]]
+    .map(([n, v, d, s, c, u], i) => `<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.2fr;align-items:center;padding:14px 24px;border-top:1px solid var(--line)">
+      <div style="display:flex;gap:12px;align-items:center">${av(n.split(" ").map((w) => w[0]).join(""), i)}<b>${n}</b></div><span>${v}</span><span>${d}</span>
+      <span class="chip" style="background:${c}1f;color:${c};justify-self:start">${s}</span><span class="muted">${u}</span></div>`).join("")}
+  <div style="display:flex;gap:30px;align-items:center;padding:18px 24px;border-top:1px solid var(--line);background:#1f1a25">
+    <span class="k">Este mês</span><span><b style="font-size:20px;color:#2dd4bf">R$ 48.920</b> <small class="muted">recuperados</small></span>
+    <span><b style="font-size:20px;color:#f2507e">-37%</b> <small class="muted">atrasos vs. mês anterior</small></span><span class="grow"></span><span class="btn r">⤓ Relatório .xlsx</span></div>
+</div>`,
+
+// 7. chat: conversa + passos da IA
+chat: () => `
+<div class="hd"><div><h1>Atendimento com <em>IA</em></h1><p>Conversa ao vivo · o agente responde e explica cada passo</p></div><span class="grow"></span><span class="chip" style="background:var(--mint-l);color:var(--mint)">● agente ativo</span></div>
+<div style="display:grid;grid-template-columns:300px 1fr 400px;gap:22px;flex:1;min-height:0">
+  <div class="card" style="padding:14px">${["Aurora Café", "Bela Ótica", "Casa Verde", "Delta Fitness", "Estúdio Lume"].map((n, i) => `<div style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:14px;${i === 0 ? "background:var(--peach)" : ""}">
+    ${av(n.split(" ").map((w) => w[0]).join(""), i)}<div style="min-width:0"><b>${n}</b><br><small class="muted">${["Como mudo meu plano?", "Obrigada!", "Pode me ligar?", "Qual o horário?", "Deu certo aqui"][i]}</small></div>
+    ${i === 2 ? `<span class="chip" style="margin-left:auto;background:var(--sun-l);color:#f6c050">humano</span>` : ""}</div>`).join("")}</div>
+  <div class="card" style="display:flex;flex-direction:column;gap:14px;background:#1f1a25">
+    ${[["c", "Oi! Quero mudar meu plano para o anual, como faço?"], ["a", "Oi! Dá para mudar direto no painel, em Assinatura → Alterar plano. O anual sai com 2 meses de desconto 😊"],
+       ["c", "E o valor que já paguei esse mês?"], ["a", "Ele entra como crédito proporcional na primeira cobrança do anual. Quer que eu faça a troca agora?"], ["c", "Pode sim!"]]
+      .map(([w, m]) => `<div style="max-width:72%;padding:14px 18px;border-radius:20px;${w === "c" ? "background:#241f2b;align-self:flex-start;border-bottom-left-radius:6px" : "background:linear-gradient(135deg,#f2507e,#ff8a5b);color:#fff;align-self:flex-end;border-bottom-right-radius:6px"}">${m}</div>`).join("")}
+    <span class="grow"></span><div style="display:flex;gap:10px;padding:12px;border-radius:999px;background:#241f2b"><span class="muted" style="padding:6px 10px">Escreva uma mensagem…</span><span class="grow"></span><span class="btn r">Enviar</span></div></div>
+  <div class="card"><h3>O que a IA fez</h3><div style="display:grid;gap:14px;margin-top:16px">
+    ${[["Recebeu a mensagem", "webhook · 120 ms", "#2a6fdb"], ["Classificou a intenção", "troca de plano · confiança 0,94", "#a78bfa"], ["Buscou o contexto (RAG)", "base de ajuda · 3 trechos", "#f2507e"],
+       ["Checou as regras", "dentro dos guardrails ✓", "#2dd4bf"], ["Respondeu", "1,8 s no total", "#ff8a5b"]]
+      .map(([a, b, c], i) => `<div style="display:flex;gap:14px"><div style="display:flex;flex-direction:column;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:${c};color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px">${i + 1}</span>
+        ${i < 4 ? `<span style="flex:1;width:2px;background:var(--line);min-height:26px"></span>` : ""}</div><div><b>${a}</b><br><small class="muted">${b}</small></div></div>`).join("")}
+    <div style="padding:14px;border-radius:14px;background:var(--sun-l);color:#f6c050;font-size:13.5px">Se a confiança for baixa ou o cliente pedir, a conversa vai para uma pessoa da equipe com prioridade.</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px">${[["Resolvidas pela IA", "72%", "#2dd4bf", [40, 48, 52, 58, 63, 68, 72]], ["Tempo médio", "1,9 s", "#f2507e", [80, 70, 62, 50, 44, 40, 38]]]
+      .map(([l, v, c, p]) => `<div style="padding:14px;border-radius:16px;background:#1f1a25"><span class="k">${l}</span><div style="font-size:26px;font-weight:800;color:${c}">${v}</div>${spark(p, c)}</div>`).join("")}</div></div>
+</div>`,
+};
+document.getElementById("p").innerHTML = (V[t] || V.jornada)();
+</script>
+</body>
+</html>
