@@ -107,7 +107,7 @@ export const profile = {
   role: "Software Engineer · Full Stack · AI Engineer",
   nowAtRole: "Analista de Telemetria em TI",
   nowAtCompany: "Poli Digital",
-  city: "Aparecida de Goiânia - GO",
+  city: "Goiânia - GO",
   /** legenda embaixo da foto no topo */
   portraitCaption: "disponível para novos projetos",
   email: "ms-eduardasoares@outlook.com",
@@ -136,7 +136,7 @@ export const intro = {
     "health score · churn · onboarding · cobrança",
     "análise de reuniões com IA",
     "eng. de software · 6º semestre",
-    "aparecida de goiânia · GO",
+    "goiânia · GO",
   ],
   leadBefore: "Desenvolvo software de ponta a ponta, do ",
   leadStrong: "back-end e dados às interfaces e à IA",
@@ -446,7 +446,7 @@ export const education = {
 
 export const contact = {
   title: "Fim da viagem. Vamos conversar?",
-  text: "Aparecida de Goiânia - GO. Aberta a conversar sobre desenvolvimento full stack, dados, integrações e automação.",
+  text: "Goiânia - GO. Aberta a conversar sobre desenvolvimento full stack, dados, integrações e automação.",
 };
 
 export const footer = {
