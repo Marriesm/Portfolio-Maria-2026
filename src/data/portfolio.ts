@@ -229,7 +229,7 @@ export const projects = {
       { area: "Sucesso do cliente", tone: "pink", modules: ["farol", "reunioes-ia"] },
       { area: "Financeiro", tone: "data", modules: ["cobranca"] },
       { area: "Atendimento", tone: "signal", modules: ["ia-atendimento"] },
-      { area: "Dados e telemetria", tone: "pink", modules: ["relatorios", "dados-historicos"] },
+      { area: "Dados e analytics", tone: "pink", modules: ["relatorios", "dados-historicos"] },
     ] satisfies PlatformArea[],
   },
   items: [
@@ -263,11 +263,11 @@ export const projects = {
       slug: "relatorios",
       mediaLabel: "demo · relatórios de desempenho",
       captions: ["Relatório de desempenho: KPIs com metas, tendência semanal e ranking das equipes (dados fictícios)"],
-      meta: "Dados · Telemetria",
+      meta: "Dados · Analytics",
       kind: "Relatórios",
-      title: "Telemetria e relatórios de desempenho",
+      title: "Relatórios de desempenho e indicadores",
       description:
-        "Coleta e análise da telemetria da operação para medir desempenho: SLA, tempo de primeira resposta, volume de atendimentos, engajamento e uso do produto, por equipe, carteira e período. Os dados viram relatórios e painéis com metas, tendências e ranking, e alertas avisam quando um indicador sai do esperado. Resultado: a gestão decide com números atualizados, sem montar planilha na mão.",
+        "Coleta e análise de dados operacionais para medir desempenho: SLA, tempo de primeira resposta, volume de atendimentos, engajamento e uso do produto, por equipe, carteira e período. Os dados viram relatórios e painéis com metas, tendências e ranking, e alertas avisam quando um indicador sai do esperado. Resultado: a gestão decide com números atualizados, sem montar planilha na mão.",
       highlights: ["SQL analítico", "Python + pandas", "KPIs e metas", "SLA e tempo de resposta", "dashboards", "alertas automáticos", "relatórios .xlsx"],
     },
     {
@@ -400,7 +400,7 @@ export const experience = {
       org: "Poli Digital",
       bullets: [
         "Criei e desenvolvo de ponta a ponta (engine, API e telas) o software de operação usado por todas as áreas da empresa: onboarding, Customer Success, atendimento, financeiro e dados.",
-        "Analiso a telemetria da operação e transformo os dados em relatórios de desempenho por equipe, carteira e atendimento, com KPIs, metas e tendências para a gestão.",
+        "Analiso os dados da operação e os transformo em relatórios de desempenho por equipe, carteira e atendimento, com KPIs, metas e tendências para a gestão.",
         "Monitoro indicadores como SLA, tempo de resposta, engajamento e uso do produto, com alertas automáticos quando algo sai do esperado.",
         "Criei o health score das carteiras e modelei a camada de dados histórica de churn, com snapshots diários e backfill.",
         "Desenvolvi soluções de IA para a operação: agentes de atendimento, roteiros gerados por IA e avaliação automática de reuniões.",
