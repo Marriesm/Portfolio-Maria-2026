@@ -47,7 +47,7 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
     const reduce = prefersReducedMotion();
     const mobile = window.innerWidth < 820;
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: !mobile, alpha: false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.5 : 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1 : 1.5));
     const scene = new THREE.Scene();
     const cam = new THREE.PerspectiveCamera(62, 1, 0.1, 400);
 
@@ -72,20 +72,30 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
     scene.add(floor);
 
     // prédios ao longo da rodovia
-    const bA = lineMat("data");
-    const bB = lineMat("signal");
+    // todas as arestas de uma cor numa só geometria: 2 draw calls em vez de um por prédio
+    const edgesA: number[] = [];
+    const edgesB: number[] = [];
+    const BOX_EDGES = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]];
     for (let i = 0; i < (mobile ? 85 : 180); i++) {
       const side = Math.random() < 0.5 ? -1 : 1;
       const w = 1.5 + Math.random() * 3;
       const h = 3 + Math.pow(Math.random(), 2) * 22;
       const d = 1.5 + Math.random() * 3;
-      const b = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(w, h, d)), i % 4 === 0 ? bB : bA);
-      b.position.set(side * (14 + Math.random() * 24), -3 + h / 2, 20 - Math.random() * 430);
-      scene.add(b);
+      const cx = side * (14 + Math.random() * 24);
+      const cz = 20 - Math.random() * 430;
+      const [x0, x1, y0, y1, z0, z1] = [cx - w / 2, cx + w / 2, -3, -3 + h, cz - d / 2, cz + d / 2];
+      const c = [[x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1], [x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]];
+      const out = i % 4 === 0 ? edgesB : edgesA;
+      for (const [a, b] of BOX_EDGES) out.push(...c[a], ...c[b]);
+    }
+    for (const [pts, role] of [[edgesA, "data"], [edgesB, "signal"]] as const) {
+      const g = new THREE.BufferGeometry();
+      g.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3));
+      scene.add(new THREE.LineSegments(g, lineMat(role)));
     }
 
     // poeira / dados flutuando
-    const DN = mobile ? 900 : 2200;
+    const DN = mobile ? 600 : 1600;
     const dp = new Float32Array(DN * 3);
     for (let i = 0; i < DN; i++) {
       dp[i * 3] = (Math.random() - 0.5) * 80;
@@ -337,7 +347,7 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
       raf = requestAnimationFrame(frame);
       const t = now / 1000;
       const sp = reduce ? 0 : 1;
-      prog += (target - prog) * (reduce ? 1 : 0.07);
+      prog += (target - prog) * (reduce ? 1 : 0.14);
       v += (vel - v) * 0.1;
       vel *= 0.9;
       const u = Math.min(0.9999, (prog * STZ.length) / STZ.length);

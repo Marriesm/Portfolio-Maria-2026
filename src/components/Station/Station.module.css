@@ -21,7 +21,7 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 30px;
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(6px);
   position: relative;
   min-width: 0;
 }
@@ -83,5 +83,7 @@
   }
   .panel {
     padding: 22px;
+    backdrop-filter: none;
+    background: color-mix(in srgb, var(--panel-solid) 94%, transparent);
   }
 }

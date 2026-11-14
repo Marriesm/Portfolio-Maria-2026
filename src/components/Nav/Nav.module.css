@@ -52,7 +52,6 @@
   display: inline-flex;
   gap: 6px;
   align-items: center;
-  backdrop-filter: blur(6px);
 }
 .navbtn kbd {
   font-family: inherit;
