@@ -229,7 +229,7 @@ export const projects = {
       { area: "Sucesso do cliente", tone: "pink", modules: ["farol", "reunioes-ia"] },
       { area: "Financeiro", tone: "data", modules: ["cobranca"] },
       { area: "Atendimento", tone: "signal", modules: ["ia-atendimento"] },
-      { area: "Dados e analytics", tone: "pink", modules: ["relatorios", "dados-historicos"] },
+      { area: "Dados e analytics", tone: "pink", modules: ["dados-historicos"] },
     ] satisfies PlatformArea[],
   },
   items: [
@@ -258,17 +258,6 @@ export const projects = {
       description:
         "Score automático que classifica cada cliente em saudável, atenção ou crítico, combinando sinais de vários sistemas. Resultado: o risco de cancelamento aparece antes, com o motivo de cada classificação.",
       farolCriteria: ["sinais financeiros", "engajamento", "uso do produto", "chamados abertos"],
-    },
-    {
-      slug: "relatorios",
-      mediaLabel: "demo · relatórios de desempenho",
-      captions: ["Relatório de desempenho: KPIs com metas, tendência semanal e ranking das equipes (dados fictícios)"],
-      meta: "Dados · Analytics",
-      kind: "Relatórios",
-      title: "Relatórios de desempenho e indicadores",
-      description:
-        "Coleta e análise de dados operacionais para medir desempenho: SLA, tempo de primeira resposta, volume de atendimentos, engajamento e uso do produto, por equipe, carteira e período. Os dados viram relatórios e painéis com metas, tendências e ranking, e alertas avisam quando um indicador sai do esperado. Resultado: a gestão decide com números atualizados, sem montar planilha na mão.",
-      highlights: ["SQL analítico", "Python + pandas", "KPIs e metas", "SLA e tempo de resposta", "dashboards", "alertas automáticos", "relatórios .xlsx"],
     },
     {
       slug: "dados-historicos",

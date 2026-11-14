@@ -17,7 +17,6 @@ const MOCKS = [
   { url: pathToFileURL(join(here, "onboarding/ativacao-roteiros.html")).href, out: "ativacao-2.webp" },
   { url: pathToFileURL(join(here, "onboarding/ativacao-modo-reuniao.html")).href, out: "ativacao-3.webp" },
   { url: pathToFileURL(join(here, "onboarding/ativacao-avaliacao-ia.html")).href, out: "ativacao-4.webp" },
-  { url: wire("relatorios"), out: "relatorios-1.webp" },
   { url: wire("historico"), out: "dados-historicos-1.webp" },
   { url: wire("agenda"), out: "onboarding-1.webp" },
   { url: wire("avaliacao"), out: "reunioes-ia-1.webp" },
