@@ -1,0 +1,88 @@
+<!doctype html>
+<!-- Onboarding com IA: tela de demonstração (dados fictícios). -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Ativação · quadro (mock)</title>
+<link rel="stylesheet" href="ativacao.css" />
+<style>
+  .client { margin: 10px; border-radius: 12px; overflow: hidden; border: 2px solid #b4434d; background: var(--panel-2); }
+  .flags { display: grid; grid-template-columns: 1fr 1fr; font-size: 11px; font-weight: 700; text-align: center; }
+  .flags span { padding: 7px 0; }
+  .body { padding: 12px 14px; }
+  .body h4 { margin: 0; font-size: 15px; display: flex; gap: 8px; align-items: center; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+  .stats div { border-radius: 8px; padding: 8px 10px; background: var(--panel); font-size: 11px; color: var(--muted); }
+  .stats b { display: block; font-size: 18px; color: var(--ink); margin-top: 2px; }
+  .warn { border: 1px solid #b7791f; background: #3a2c12; color: #fbbf24; border-radius: 8px; padding: 9px 12px; font-size: 12.5px; font-weight: 600; }
+  .warn small { display: block; color: #d6b46a; font-weight: 400; }
+  .prog { display: flex; justify-content: space-between; font-size: 12.5px; margin-top: 12px; }
+  .bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px; }
+  .bars i { height: 4px; border-radius: 2px; background: var(--line); }
+  .bars i.on { background: #f43f7a; }
+  .who { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+  .av { width: 30px; height: 30px; border-radius: 50%; background: var(--pink); display: grid; place-items: center; font-size: 11px; font-weight: 700; }
+  .who .acts { margin-left: auto; display: flex; gap: 6px; }
+  .who .acts i { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #e11d74, #f2545b); display: grid; place-items: center; font-style: normal; font-size: 13px; }
+  .client.ok { border-color: #2d7a5c; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <span class="crumb">Onboarding › <b>Jornada ⌄</b></span>
+    <span class="grow"></span>
+    <span class="btn">☰ Personalizar etapas</span>
+    <span class="btn">🏷 Perfil do cliente</span>
+    <span class="btn">➤ Mensagens</span>
+    <span class="btn">ⓘ Revisões</span>
+    <span class="btn">↻ Atualizar status</span>
+  </div>
+  <div class="filters">
+    <span class="box"><span class="tag" style="background:var(--blue)">ORIGEM A</span><b>00</b><span class="tag" style="background:var(--pink)">ORIGEM B</span><b>0</b></span>
+    <span class="box search">⌕ Buscar cliente...</span>
+    <span class="box"><small class="muted">RESPONSÁVEL</small> Todos ⌄</span>
+    <span class="box kpi">⚠ Críticos <b style="background:#f87171">0</b></span>
+    <span class="box kpi">→ Prontos para avançar <b style="background:var(--green)">0</b></span>
+    <span class="btn">⤓ Exportar</span>
+  </div>
+  <div class="board">
+    <div>
+      <div class="stage" style="color:#67e8f9;border-color:#67e8f9">KICK-OFF <span>2 etapas · 0 clientes</span></div>
+      <div class="col"><div class="colhead"><div><small>REUNIÕES DO DIA</small><b>Kick-off</b></div><span class="count">0</span></div>
+        <div class="filter">⏷ Todos <span class="count">0</span></div><div class="empty">☐<br>Nenhuma reunião hoje.</div></div>
+    </div>
+    <div>
+      <div class="stage" style="color:#93c5fd;border-color:#93c5fd">PRIMEIRA REUNIÃO <span>2 etapas · 0 clientes</span></div>
+      <div class="col"><div class="colhead"><div><small>REUNIÕES DO DIA</small><b>Primeira reunião</b></div><span class="count">0</span></div>
+        <div class="filter">⏷ Todos <span class="count">0</span></div>
+        <div class="client ok"><div class="flags"><span style="background:#123b2e;color:#6ee7b7">✓ EM DIA</span><span style="background:#1e2a4a;color:#93c5fd">HOJE 15:00</span></div>
+          <div class="body"><h4>Cliente Mock 2 <span class="tag" style="background:var(--blue)">ORIGEM A</span></h4><span class="muted">Segmento Mock · R$ 000/mês</span>
+            <div class="prog"><span class="muted">Reuniões feitas</span><b>1/4</b></div><div class="bars"><i class="on"></i><i></i><i></i><i></i></div>
+            <div class="who"><span class="av" style="background:#0f766e">RM</span><div><b>Responsável Mock</b><br><small class="muted">ID 00000</small></div><span class="acts"><i>📅</i><i>💬</i></span></div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="stage" style="color:#fdba74;border-color:#fdba74">SEGUNDA REUNIÃO <span>2 etapas · 0 clientes</span></div>
+      <div class="col"><div class="colhead"><div><small>REUNIÕES DO DIA</small><b>Segunda reunião</b></div><span class="count">0</span></div>
+        <div class="filter">⏷ Todos <span class="count">0</span></div><div class="empty">☐<br>Nenhuma reunião hoje.</div></div>
+    </div>
+    <div>
+      <div class="stage" style="color:#f9a8d4;border-color:#f9a8d4">ENTREVISTA <span>2 etapas · 0 clientes</span></div>
+      <div class="col"><div class="colhead"><div><small>REUNIÕES DO DIA</small><b>Entrevista</b></div><span class="count">0</span></div>
+        <div class="filter">⏷ Todos <span class="count">0</span></div><div class="empty">☐<br>Nenhuma reunião hoje.</div></div>
+    </div>
+    <div>
+      <div class="stage" style="color:#fda4af;border-color:#fda4af">EM ESPERA <span>1 etapa · 00 clientes</span></div>
+      <div class="col"><div class="colhead" style="background:linear-gradient(135deg,#7a1e3e,#5c1730)"><div><small>AGUARDANDO REUNIÃO</small><b>Em espera</b></div><span class="count">00</span></div>
+        <div class="filter">⏷ Todos <span class="count">00</span></div>
+        <div class="client"><div class="flags"><span style="background:#5b1f27;color:#fecaca">⊘ SEM RESPOSTA</span><span style="background:#1e2147;color:#c7d2fe">⚠ CRÍTICO</span></div>
+          <div class="body"><h4>Cliente Mock 1 <span class="tag" style="background:var(--blue)">ORIGEM A</span></h4><span class="muted">Segmento Mock · R$ 000/mês</span>
+            <div class="stats"><div style="background:#4a1d24;color:#fca5a5">⏱ TEMPO NA ETAPA<b style="color:#f87171">00 dias</b>atrasado</div><div>↻ CICLO<b>00d</b>desde 00/00</div></div>
+            <div class="warn">📅 Falta marcar a 1ª reunião<small>há 00 dias sem data</small></div>
+            <div class="prog"><span class="muted">Reuniões feitas</span><b>1/4</b></div><div class="bars"><i class="on"></i><i></i><i></i><i></i></div>
+            <div class="who"><span class="av">CM</span><div><b>Consultora Mock</b><br><small class="muted">ID 00000</small></div><span class="acts"><i>📅</i><i>💬</i></span></div></div></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

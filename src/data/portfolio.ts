@@ -235,7 +235,12 @@ export const projects = {
     {
       slug: "ativacao",
       mediaLabel: "demo · quadro de acompanhamento",
-      captions: ["Jornada dos clientes: cada linha atravessa as etapas, com alertas de quem parou (dados fictícios)", "Co-piloto: roteiro gerado por IA e o cartão do que falar agora (dados fictícios)"],
+      captions: [
+        "Quadro de acompanhamento: clientes por etapa, com alerta de quem está sem resposta (dados fictícios)",
+        "Roteiro gerado por IA a partir do perfil e do objetivo do cliente (dados fictícios)",
+        "Modo reunião: o co-piloto mostra o que falar e perguntar, item a item (dados fictícios)",
+        "Avaliação por IA: nota por item com peso e trecho que comprova (dados fictícios)",
+      ],
       meta: "IA · Onboarding",
       kind: "Onboarding com IA",
       title: "Onboarding guiado por IA",

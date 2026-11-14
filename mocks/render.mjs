@@ -11,8 +11,11 @@ const out = (name) => join(here, "../src/assets/projetos", name);
 const wire = (t) => `${pathToFileURL(join(here, "wireframes.html")).href}?t=${t}`;
 
 const MOCKS = [
-  { url: wire("jornada"), out: "ativacao-1.png" },
-  { url: wire("copiloto"), out: "ativacao-2.png" },
+  // onboarding: visual da versão antiga, com nomes genéricos
+  { url: pathToFileURL(join(here, "onboarding/ativacao-quadro.html")).href, out: "ativacao-1.png" },
+  { url: pathToFileURL(join(here, "onboarding/ativacao-roteiros.html")).href, out: "ativacao-2.png" },
+  { url: pathToFileURL(join(here, "onboarding/ativacao-modo-reuniao.html")).href, out: "ativacao-3.png" },
+  { url: pathToFileURL(join(here, "onboarding/ativacao-avaliacao-ia.html")).href, out: "ativacao-4.png" },
   { url: wire("historico"), out: "dados-historicos-1.png" },
   { url: wire("agenda"), out: "onboarding-1.png" },
   { url: wire("avaliacao"), out: "reunioes-ia-1.png" },

@@ -1,0 +1,88 @@
+<!doctype html>
+<!-- Onboarding com IA: tela de demonstração (dados fictícios). -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Ativação · avaliação por IA (mock)</title>
+<link rel="stylesheet" href="ativacao.css" />
+<style>
+  body { display: grid; place-items: center; background: #151925; }
+  .modal { width: 1440px; height: 900px; background: #1b2130; border: 1px solid var(--line); border-radius: 16px; display: grid;
+    grid-template-rows: auto 1fr auto; box-shadow: 0 30px 80px rgba(0,0,0,.5); overflow: hidden; }
+  .mh { display: flex; align-items: center; gap: 16px; padding: 22px 26px; border-bottom: 1px solid var(--line); }
+  .mh h2 { margin: 0; font-size: 22px; }
+  .mh small { display: block; color: var(--muted); margin-top: 2px; }
+  .seg { margin-left: auto; display: flex; background: var(--panel-2); border-radius: 10px; padding: 4px; }
+  .seg span { padding: 8px 14px; border-radius: 8px; display: flex; gap: 8px; align-items: center; color: var(--muted); }
+  .seg .on { background: #7a1e3e; color: #fff; }
+  .x { width: 34px; height: 34px; border-radius: 50%; background: var(--panel-2); display: grid; place-items: center; }
+  .cols { display: grid; grid-template-columns: 360px 1fr; min-height: 0; }
+  .left { border-right: 1px solid var(--line); padding: 20px; }
+  .left h5 { margin: 0 0 12px; font-size: 11.5px; letter-spacing: .1em; color: var(--muted); }
+  .st { display: grid; grid-template-columns: 24px 1fr; gap: 10px; padding: 12px; border-radius: 10px; margin-bottom: 6px; border-left: 3px solid; }
+  .st.on { background: #33202a; outline: 1px solid #f43f7a; }
+  .st b { display: block; }
+  .st small { color: var(--muted); }
+  .right { padding: 20px 26px; overflow: hidden; }
+  .note { padding: 14px 16px; border-radius: 10px; background: #3a1d27; border: 1px solid #7a2a44; color: #ffe4e6; }
+  .note b { color: #fff; }
+  .doc { display: flex; align-items: flex-start; gap: 14px; margin-top: 14px; padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: #161b27; }
+  .doc small { color: var(--muted); }
+  .doc .grow { flex: 1; }
+  .doc p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+  .score { margin-top: 14px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .score div { padding: 12px 14px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); }
+  .score small { display: block; font-size: 11px; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
+  .score b { font-size: 24px; }
+  h4 { margin: 18px 0 10px; font-size: 15px; }
+  h4 span { color: var(--muted); font-weight: 400; }
+  .row { display: grid; grid-template-columns: 26px 1fr auto auto; gap: 12px; align-items: center; padding: 11px 14px; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 6px; background: #1f2534; }
+  .ok { color: #34d399; font-weight: 700; }
+  .no { color: #f87171; font-weight: 700; }
+  .w { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: #4a1d2c; color: #fda4af; }
+  .q { font-size: 12px; color: var(--muted); font-style: italic; max-width: 360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mf { display: flex; align-items: center; gap: 12px; padding: 16px 26px; border-top: 1px solid var(--line); color: var(--muted); }
+  .mf .btn { margin-left: auto; }
+</style>
+</head>
+<body>
+  <div class="modal">
+    <div class="mh">
+      <div><h2>Personalizar etapas</h2><small>Cada origem tem o próprio funil: as reuniões, na ordem do quadro, e o critério que a IA usa para avaliar cada uma.</small></div>
+      <span class="seg"><span class="on"><span class="tag" style="background:var(--blue)">ORIGEM A</span>4 reuniões</span><span><span class="tag" style="background:var(--pink)">ORIGEM B</span>4 reuniões</span></span>
+      <span class="x">✕</span>
+    </div>
+    <div class="cols">
+      <div class="left">
+        <h5>COLUNAS DO FUNIL · ORIGEM A</h5>
+        <div class="st" style="border-color:#67e8f9"><span>1</span><div><b>Kick-off</b><small>SLA 5d + 2d · 3 validações</small></div></div>
+        <div class="st on" style="border-color:#93c5fd"><span>2</span><div><b>Primeira reunião</b><small>SLA 5d + 2d · 1 validação</small></div></div>
+        <div class="st" style="border-color:#fdba74"><span>3</span><div><b>Segunda reunião</b><small>SLA 5d + 2d · 2 validações</small></div></div>
+        <div class="st" style="border-color:#f9a8d4"><span>4</span><div><b>Entrevista</b><small>SLA 7d + 1d · 2 validações</small></div></div>
+        <div class="st" style="border-color:#fda4af"><span>·</span><div><b>Em espera</b><small>Sempre por último · SLA 2d</small></div></div>
+      </div>
+      <div class="right">
+        <div class="note">✦ <b>A IA lê a transcrição de cada reunião</b> seguindo este documento e, para cada item, diz se foi tratado, o que foi dito e o trecho que comprova. A nota é a soma dos pesos tratados (0 a 10). <b>Nota mínima: 7.</b></div>
+        <div class="doc">
+          <div class="grow"><small>Documento em vigor</small><br><b>Roteiro_Etapa2.docx</b>
+            <p>Exporte, edite no Word mantendo os títulos <b>Nota mínima</b> e <b>Itens a analisar</b> (um item por linha, peso no fim) e importe de volta.</p></div>
+          <span class="btn ghost">Exportar</span><span class="btn">Importar nova versão</span>
+        </div>
+        <div class="score">
+          <div><small>ÚLTIMA REUNIÃO AVALIADA</small><b style="color:#34d399">8,5</b> <span class="muted">/ 10</span></div>
+          <div><small>ITENS TRATADOS</small><b>34</b> <span class="muted">de 40</span></div>
+          <div><small>VOLTAM NA PRÓXIMA</small><b style="color:#fbbf24">6</b> <span class="muted">itens</span></div>
+        </div>
+        <h4>Itens a analisar <span>· 40</span></h4>
+        <div class="row"><span class="ok">✓</span><span>Cadastrar usuários</span><span class="q">“…vamos cadastrar a equipe agora…”</span><span class="w">peso 0,25</span></div>
+        <div class="row"><span class="ok">✓</span><span>Definir perfis e permissões</span><span class="q">“…quem pode ver todas as conversas…”</span><span class="w">peso 0,25</span></div>
+        <div class="row"><span class="ok">✓</span><span>Configurar departamentos</span><span class="q">“…separar vendas e suporte…”</span><span class="w">peso 0,25</span></div>
+        <div class="row"><span class="no">✕</span><span>Configurar automações previstas</span><span class="q">não citado na transcrição</span><span class="w">peso 0,25</span></div>
+        <div class="row"><span class="ok">✓</span><span>Treinar o assistente virtual com as perguntas frequentes</span><span class="q">“…as perguntas que mais chegam…”</span><span class="w">peso 0,25</span></div>
+        <div class="row"><span class="ok">✓</span><span>Validar com o cliente o resumo de conversas e a transcrição de áudio</span><span class="q">“…mostrei o resumo funcionando…”</span><span class="w">peso 0,25</span></div>
+      </div>
+    </div>
+    <div class="mf">ⓘ As alterações valem para o quadro na hora. Itens não tratados voltam no início da próxima reunião.<span class="btn">Concluir</span></div>
+  </div>
+</body>
+</html>

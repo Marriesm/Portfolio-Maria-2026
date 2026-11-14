@@ -1,0 +1,86 @@
+<!doctype html>
+<!-- Onboarding com IA: tela de demonstração (dados fictícios). -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Ativação · roteiros (mock)</title>
+<link rel="stylesheet" href="ativacao.css" />
+<style>
+  .ghostboard { position: absolute; inset: 0; padding: 26px; display: grid; grid-template-columns: repeat(3, 230px); gap: 16px; opacity: .55; }
+  .ghostboard div { background: var(--panel); border-radius: 12px; }
+  .ghostboard div::before { content: ""; display: block; height: 66px; border-radius: 12px 12px 0 0; background: #e11d74; }
+  .dh { display: flex; align-items: center; gap: 14px; padding: 22px 26px 14px; }
+  .dh .av { width: 46px; height: 46px; border-radius: 10px; background: var(--blue); display: grid; place-items: center; font-weight: 700; }
+  .dh h3 { margin: 0; font-size: 20px; }
+  .dh small { color: var(--muted); }
+  .pill { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid #f43f7a; color: #fda4af; }
+  .ok { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: #123b2e; color: #6ee7b7; }
+  .tabs { margin: 6px 26px 0; display: flex; background: linear-gradient(135deg, #e11d74, #f2545b); border-radius: 10px; padding: 6px; }
+  .tabs span { flex: 1; text-align: center; padding: 8px 0; font-size: 13px; font-weight: 600; border-radius: 8px; }
+  .tabs .on { background: #fff; color: var(--purple-2); box-shadow: 0 0 0 2px #fff; }
+  .scroll { padding: 16px 26px; display: grid; gap: 14px; }
+  .steps { display: flex; justify-content: space-around; padding: 16px; background: var(--panel); border-radius: 12px; border: 1px solid var(--line); text-align: center; font-size: 13px; }
+  .steps i { display: grid; place-items: center; width: 30px; height: 30px; margin: 0 auto 6px; border-radius: 50%; font-style: normal; font-weight: 700; background: #9d174d; color: #ffe4e6; border: 2px solid #f43f7a; }
+  .steps .done i { background: var(--green); border-color: var(--green); color: #fff; }
+  .steps small { display: block; font-size: 10.5px; letter-spacing: .08em; color: #fb7185; font-weight: 700; margin-top: 2px; }
+  .steps .done small { color: #6ee7b7; }
+  .seg { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .seg > div { padding: 12px 16px; border-right: 1px solid var(--line); }
+  .seg small { display: block; font-size: 10.5px; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
+  .seg b { font-size: 15px; }
+  .pain { grid-column: 1 / -1; border-top: 1px solid var(--line); background: #151a26; }
+  .src { display: flex; gap: 8px; margin-top: 8px; }
+  .src span { font-size: 11.5px; padding: 3px 10px; border-radius: 999px; background: var(--panel-2); color: var(--muted); }
+  .next { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 12px; background: linear-gradient(135deg, #e11d74, #f2545b); }
+  .next small { font-size: 10.5px; letter-spacing: .08em; opacity: .8; }
+  .next h4 { margin: 2px 0; font-size: 18px; }
+  .next .ring { margin-left: auto; width: 54px; height: 54px; border-radius: 50%; border: 4px solid rgba(255,255,255,.25); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+  .next .mode { background: #1a1f2c; color: #fff; padding: 9px 14px; border-radius: 8px; font-weight: 600; }
+  .two { display: grid; grid-template-columns: 1fr 1.2fr; gap: 14px; }
+  .items, .copilot { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .it { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 10px; border-radius: 8px; }
+  .it.on { background: #2c1b22; }
+  .it i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 12px; background: var(--panel-2); }
+  .it.on i { background: #f43f7a; }
+  .it b { display: block; font-size: 13.5px; margin-top: 6px; }
+  .niche { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: #1e2a4a; color: #93c5fd; }
+  .copilot small { font-size: 10.5px; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
+  .copilot h4 { margin: 10px 0 8px; font-size: 18px; line-height: 1.3; }
+  .copilot p { margin: 0; color: #cfd5e4; }
+  .foot { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 10px; padding: 14px 26px; border-top: 1px solid var(--line); background: #1a1f2c; }
+  .foot .muted { flex: 1; }
+</style>
+</head>
+<body>
+  <div class="ghostboard"><div></div><div></div><div></div></div>
+  <div class="dim"></div>
+  <aside class="drawer">
+    <div class="dh"><span class="av">C1</span>
+      <div><h3>Cliente Mock 1 <span class="tag" style="background:var(--blue)">ORIGEM A</span></h3><small>ID 00000 · R$ 000/mês · </small><span class="ok">Sem solicitações em aberto</span></div>
+      <span class="pill" style="margin-left:auto">● Em onboarding</span></div>
+    <div class="tabs"><span>▤ Resumo</span><span>📅 Reuniões</span><span>📄 Transcrições</span><span>📋 Análises</span><span class="on">☑ Roteiros</span><span>? Solicitações</span><span>🕘 Histórico</span></div>
+    <div class="scroll">
+      <div class="steps"><div class="done"><i>✓</i>Kick-off<small>NOTA 0,0</small></div><div><i>2</i><b>1ª reunião</b><small>PRÓXIMA</small></div><div><i>3</i>2ª reunião<small>DEPOIS</small></div><div><i>4</i>Entrevista<small>DEPOIS</small></div></div>
+      <div class="seg">
+        <div><small>SEGMENTO</small><b>Segmento Mock</b></div>
+        <div><small>SUBSEGMENTO</small><b>Perfil Mock</b></div>
+        <div style="border-right:0"><small>CANAL</small><b style="color:#6ee7b7">● Válido</b></div>
+        <div class="pain"><small>OBJETIVO DO CLIENTE</small><b>Atender mais clientes sem aumentar a equipe.</b>
+          <div class="src"><span>↳ dor vinda do CRM</span><span>↳ análise do site do cliente</span><span>↳ perfil classificado por IA</span></div></div>
+      </div>
+      <div class="next"><div><small>PRÓXIMA</small><h4>1ª reunião</h4><span>0 de 00 tratados · 0 retomados do kick-off</span></div><span class="ring">0/00</span><span class="mode">● Modo reunião</span></div>
+      <div class="two">
+        <div class="items">
+          <div class="it on"><i>1</i><div><span class="chip">RETOMADO DO KICK-OFF</span><b>Validar a estrutura da conta: gerenciador, canais e quem tem acesso</b></div></div>
+          <div class="it"><i>2</i><div><span class="niche">SOB MEDIDA</span><b>Entender o fluxo de atendimento típico do negócio e os horários de pico</b></div></div>
+          <div class="it"><i>3</i><div><span class="niche">SOB MEDIDA</span><b>Mapear as mensagens que mais se repetem para virar automação</b></div></div>
+        </div>
+        <div class="copilot"><small>CO-PILOTO · ITEM 1 DE 00</small><br><span class="chip" style="display:inline-block;margin-top:8px">RETOMADO DO KICK-OFF</span>
+          <h4>Validar a estrutura da conta: gerenciador, canais e quem tem acesso</h4>
+          <p>Gerado a partir do perfil e do objetivo do cliente: o roteiro de cada reunião traz os itens que fazem sentido para o negócio dele.</p></div>
+      </div>
+    </div>
+    <div class="foot"><span class="muted">Itens não tratados vão para o início da próxima reunião.</span><span class="btn">⧗ Refazer roteiro</span><span class="btn ghost">⧉ Copiar roteiro</span></div>
+  </aside>
+</body>
+</html>
