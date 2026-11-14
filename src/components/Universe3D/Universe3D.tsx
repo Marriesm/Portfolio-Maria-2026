@@ -1,4 +1,4 @@
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import * as THREE from "three";
 import type { Palette } from "../../data/portfolio";
 import { cssVar, prefersReducedMotion, stations } from "../../lib/dom";
@@ -39,14 +39,25 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
   const world = useRef<World | null>(null);
   const classicRef = useRef(classic);
   classicRef.current = classic;
+  // sem WebGL (ou depois de erro) a cena some e fica só o fundo; o resto do site segue normal
+  const [failed, setFailed] = useState(false);
+  // muda quando o navegador devolve o contexto gráfico: recria a cena num canvas novo
+  const [generation, setGeneration] = useState(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || failed) return;
 
     const reduce = prefersReducedMotion();
     const mobile = window.innerWidth < 820;
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !mobile, alpha: false });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: !mobile, alpha: false, powerPreference: "low-power" });
+    } catch (err) {
+      console.warn("Cena 3D desativada: WebGL indisponível.", err);
+      setFailed(true);
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1 : 1.5));
     const scene = new THREE.Scene();
     const cam = new THREE.PerspectiveCamera(62, 1, 0.1, 400);
@@ -340,17 +351,32 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
       mx = e.clientX / window.innerWidth - 0.5;
       my = e.clientY / window.innerHeight - 0.5;
     };
-    const size = () => {
-      renderer.setSize(window.innerWidth, window.innerHeight, false);
-      cam.aspect = window.innerWidth / window.innerHeight;
+    // no celular a barra de endereço muda a altura a cada rolagem: só redimensiona quando a largura muda
+    // ou a altura cresce, e no máximo uma vez por quadro (evita realocar o buffer e piscar)
+    let lastW = 0;
+    let lastH = 0;
+    let sizeFrame = 0;
+    const applySize = () => {
+      sizeFrame = 0;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const widthChanged = w !== lastW;
+      if (mobile && !widthChanged && h - lastH < 160) return;
+      lastH = mobile && !widthChanged ? Math.max(h, lastH) : h;
+      lastW = w;
+      renderer.setSize(w, lastH, false);
+      cam.aspect = w / lastH;
       cam.updateProjectionMatrix();
+    };
+    const size = () => {
+      if (!sizeFrame) sizeFrame = requestAnimationFrame(applySize);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("pointermove", onPointer);
     window.addEventListener("resize", size);
     measure();
     onScroll();
-    size();
+    applySize();
 
     const look = new THREE.Vector3();
     const pos = new THREE.Vector3();
@@ -392,7 +418,14 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
         p.rotation.x = t * (0.3 + i * 0.15) * sp;
         p.rotation.y = t * (0.2 + i * 0.1) * sp;
       });
-      renderer.render(scene, cam);
+      try {
+        renderer.render(scene, cam);
+      } catch (err) {
+        console.warn("Cena 3D pausada após erro de renderização.", err);
+        stop();
+        setFailed(true);
+        return;
+      }
       if (tick % 8 === 0 && readoutRef.current) readoutRef.current.textContent = `z ${pos.z.toFixed(1)} · vel ${v.toFixed(1)}`;
     };
 
@@ -406,6 +439,15 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
     };
     const onVisibility = () => (document.hidden ? stop() : start());
     document.addEventListener("visibilitychange", onVisibility);
+
+    // o sistema pode tirar o contexto gráfico (pouca memória, troca de aba, GPU reiniciada)
+    const onLost = (e: Event) => {
+      e.preventDefault();
+      stop();
+    };
+    const onRestored = () => setGeneration((g) => g + 1);
+    canvas.addEventListener("webglcontextlost", onLost);
+    canvas.addEventListener("webglcontextrestored", onRestored);
     start();
 
     world.current = { recolor, start, stop };
@@ -419,6 +461,9 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
       window.removeEventListener("resize", size);
       layoutObserver.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
+      canvas.removeEventListener("webglcontextlost", onLost);
+      canvas.removeEventListener("webglcontextrestored", onRestored);
+      cancelAnimationFrame(sizeFrame);
       scene.traverse((obj) => {
         const o = obj as THREE.Mesh;
         o.geometry?.dispose();
@@ -429,8 +474,10 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
         });
       });
       renderer.dispose();
+      // libera o contexto na hora: navegadores têm limite de contextos WebGL abertos
+      renderer.forceContextLoss();
     };
-  }, [readoutRef]);
+  }, [readoutRef, failed, generation]);
 
   // trocar paleta ou modo recolore a cena (as variáveis CSS já foram aplicadas)
   useEffect(() => {
@@ -441,7 +488,7 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
 
   return (
     <>
-      <canvas ref={canvasRef} className={styles.world} aria-hidden="true" />
+      {!failed && <canvas key={generation} ref={canvasRef} className={styles.world} aria-hidden="true" />}
       <div className={styles.scan} aria-hidden="true" />
       <div className={styles.vignette} aria-hidden="true" />
     </>

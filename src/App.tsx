@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Component, lazy, Suspense, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { CommandPalette } from "./components/CommandPalette/CommandPalette";
 import { Contact } from "./components/Contact/Contact";
 import { Education } from "./components/Education/Education";
@@ -17,6 +17,20 @@ import { prefersReducedMotion, store } from "./lib/dom";
 
 // a cena 3D (e o three.js) só carrega depois que o conteúdo já apareceu
 const Universe3D = lazy(() => import("./components/Universe3D/Universe3D").then((m) => ({ default: m.Universe3D })));
+
+/** Se a cena 3D falhar por qualquer motivo, ela some e o resto do site continua funcionando. */
+class SceneBoundary extends Component<{ children: ReactNode }, { broken: boolean }> {
+  state = { broken: false };
+  static getDerivedStateFromError() {
+    return { broken: true };
+  }
+  componentDidCatch(error: unknown) {
+    console.warn("Cena 3D desativada após erro.", error);
+  }
+  render() {
+    return this.state.broken ? null : this.props.children;
+  }
+}
 
 /** true quando o navegador fica ocioso depois do primeiro desenho */
 function useIdle() {
@@ -107,9 +121,11 @@ export function App() {
   return (
     <>
       {idle && (
-        <Suspense fallback={null}>
-          <Universe3D palette={palette} classic={classic} readoutRef={readoutRef} />
-        </Suspense>
+        <SceneBoundary>
+          <Suspense fallback={null}>
+            <Universe3D palette={palette} classic={classic} readoutRef={readoutRef} />
+          </Suspense>
+        </SceneBoundary>
       )}
       <Nav
         palette={palette}
