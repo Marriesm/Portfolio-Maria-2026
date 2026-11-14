@@ -305,21 +305,34 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
     let lastY = window.scrollY;
     let vel = 0;
 
-    const onScroll = () => {
+    // posições das seções medidas só quando o layout muda, não a cada scroll
+    let tops: number[] = [];
+    let lastHeight = 0;
+    const measure = () => {
       const sections = stations();
-      if (!sections.length) return;
+      tops = sections.map((s) => s.offsetTop);
+      lastHeight = sections.length ? sections[sections.length - 1].offsetHeight : 0;
+    };
+    const layoutObserver = new ResizeObserver(() => {
+      measure();
+      onScroll();
+    });
+    layoutObserver.observe(document.body);
+
+    const onScroll = () => {
+      if (!tops.length) return;
       const y = window.scrollY;
       const c = window.innerHeight * 0.5;
       let i = 0;
-      sections.forEach((s, k) => {
-        if (s.offsetTop <= y + c) i = k;
+      tops.forEach((top, k) => {
+        if (top <= y + c) i = k;
       });
-      const s = sections[i];
-      const next = sections[i + 1];
-      const local = next
-        ? Math.min(1, Math.max(0, (y + c - s.offsetTop) / (next.offsetTop - s.offsetTop)))
-        : Math.min(1, (y + c - s.offsetTop) / s.offsetHeight);
-      target = (i + local * 0.999) / sections.length;
+      const top = tops[i];
+      const next = tops[i + 1];
+      const local = next !== undefined
+        ? Math.min(1, Math.max(0, (y + c - top) / (next - top)))
+        : Math.min(1, (y + c - top) / lastHeight);
+      target = (i + local * 0.999) / tops.length;
       vel = Math.abs(y - lastY);
       lastY = y;
     };
@@ -335,6 +348,7 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("pointermove", onPointer);
     window.addEventListener("resize", size);
+    measure();
     onScroll();
     size();
 
@@ -342,9 +356,13 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
     const pos = new THREE.Vector3();
     let v = 0;
     let raf = 0;
+    let tick = 0;
+    // no celular a cena roda a ~30 quadros por segundo: metade do trabalho, mesma fluidez
+    const skip = mobile ? 2 : 1;
 
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
+      if (++tick % skip) return;
       const t = now / 1000;
       const sp = reduce ? 0 : 1;
       prog += (target - prog) * (reduce ? 1 : 0.14);
@@ -375,7 +393,7 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
         p.rotation.y = t * (0.2 + i * 0.1) * sp;
       });
       renderer.render(scene, cam);
-      if (readoutRef.current) readoutRef.current.textContent = `z ${pos.z.toFixed(1)} · vel ${v.toFixed(1)}`;
+      if (tick % 8 === 0 && readoutRef.current) readoutRef.current.textContent = `z ${pos.z.toFixed(1)} · vel ${v.toFixed(1)}`;
     };
 
     // pausa no modo recrutador e com a aba em segundo plano
@@ -399,6 +417,7 @@ export function Universe3D({ palette, classic, readoutRef }: Universe3DProps) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("resize", size);
+      layoutObserver.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       scene.traverse((obj) => {
         const o = obj as THREE.Mesh;

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { CommandPalette } from "./components/CommandPalette/CommandPalette";
 import { Contact } from "./components/Contact/Contact";
 import { Education } from "./components/Education/Education";
@@ -11,10 +11,27 @@ import { Nav } from "./components/Nav/Nav";
 import { Projects } from "./components/Projects/Projects";
 import { Skills } from "./components/Skills/Skills";
 import { useToast } from "./components/Toast/Toast";
-import { Universe3D } from "./components/Universe3D/Universe3D";
 import { profile, type Command, type Palette } from "./data/portfolio";
 import { useActiveSector } from "./hooks/useActiveSector";
 import { prefersReducedMotion, store } from "./lib/dom";
+
+// a cena 3D (e o three.js) só carrega depois que o conteúdo já apareceu
+const Universe3D = lazy(() => import("./components/Universe3D/Universe3D").then((m) => ({ default: m.Universe3D })));
+
+/** true quando o navegador fica ocioso depois do primeiro desenho */
+function useIdle() {
+  const [idle, setIdle] = useState(false);
+  useEffect(() => {
+    const done = () => setIdle(true);
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(done, { timeout: 1200 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(done, 300);
+    return () => window.clearTimeout(id);
+  }, []);
+  return idle;
+}
 
 const readPalette = (): Palette => {
   const p = store.get("neon");
@@ -29,6 +46,7 @@ export function App() {
   const [commandsOpen, setCommandsOpen] = useState(false);
   const readoutRef = useRef<HTMLSpanElement>(null);
   const active = useActiveSector();
+  const idle = useIdle();
 
   // paleta e modo vivem no <html>, onde as variáveis CSS são trocadas
   useLayoutEffect(() => {
@@ -88,7 +106,11 @@ export function App() {
 
   return (
     <>
-      <Universe3D palette={palette} classic={classic} readoutRef={readoutRef} />
+      {idle && (
+        <Suspense fallback={null}>
+          <Universe3D palette={palette} classic={classic} readoutRef={readoutRef} />
+        </Suspense>
+      )}
       <Nav
         palette={palette}
         classic={classic}

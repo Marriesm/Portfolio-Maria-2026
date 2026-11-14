@@ -21,7 +21,6 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 30px;
-  backdrop-filter: blur(6px);
   position: relative;
   min-width: 0;
 }

@@ -18,7 +18,6 @@
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 6px;
-  backdrop-filter: blur(14px);
   box-shadow: 0 0 80px color-mix(in srgb, var(--data) 22%, transparent);
 }
 /* cantoneiras, iguais às dos painéis */

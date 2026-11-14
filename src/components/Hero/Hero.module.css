@@ -292,7 +292,6 @@
   background:
     linear-gradient(180deg, transparent 0 46%, color-mix(in srgb, var(--signal) 22%, transparent) 50%, transparent 54%) 0 0 / 100% 220% no-repeat,
     repeating-linear-gradient(0deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 3px);
-  mix-blend-mode: screen;
   animation: sweep 4.5s linear infinite;
 }
 

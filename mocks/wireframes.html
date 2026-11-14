@@ -208,6 +208,39 @@ cobranca: () => `
     <span><b style="font-size:20px;color:#f2507e">-37%</b> <small class="muted">atrasos vs. mês anterior</small></span><span class="grow"></span><span class="btn r">⤓ Relatório .xlsx</span></div>
 </div>`,
 
+// 8. relatórios: KPIs com meta, tendência e ranking por equipe
+relatorios: () => `
+<div class="hd"><div><h1>Relatório de <em>desempenho</em></h1><p>Telemetria da operação · semana 46 · todas as equipes</p></div><span class="grow"></span>
+  <span style="display:flex;background:#241f2b;border-radius:999px;padding:4px">${["Dia", "Semana", "Mês"].map((m, i) => `<span style="padding:8px 16px;border-radius:999px;font-weight:600;${i === 1 ? "background:linear-gradient(135deg,#f2507e,#ff8a5b);color:#fff" : "color:var(--muted)"}">${m}</span>`).join("")}</span>
+  <span class="btn r">⤓ Exportar .xlsx</span></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+  ${[["SLA cumprido", "96,4%", "meta 95%", "#2dd4bf", [80, 84, 86, 88, 90, 93, 96]], ["1ª resposta", "2m 41s", "meta 3 min", "#a78bfa", [70, 64, 60, 52, 50, 46, 41]],
+     ["Atendimentos", "12.480", "+8% vs. semana anterior", "#ff8a5b", [40, 46, 52, 50, 58, 62, 68]], ["Engajamento", "71%", "clientes ativos no período", "#f2507e", [50, 54, 58, 61, 64, 68, 71]]]
+    .map(([l, v, d, c, p]) => `<div class="card"><span class="k">${l}</span><div style="font-size:32px;font-weight:800;color:${c}">${v}</div><small class="muted">${d}</small>${spark(p, c)}</div>`).join("")}
+</div>
+<div style="display:grid;grid-template-columns:1.4fr 1fr;gap:22px;flex:1;min-height:0">
+  <div class="card" style="display:flex;flex-direction:column"><div style="display:flex;align-items:center"><h3>Tempo de resposta por dia</h3><span class="grow"></span>
+    <span class="chip" style="background:#f2507e22;color:#f2507e">— semana atual</span><span class="chip" style="background:#2e2735;color:var(--muted);margin-left:8px">— semana anterior</span></div>
+    <svg viewBox="0 0 700 300" style="flex:1;width:100%;margin-top:14px" preserveAspectRatio="none">
+      <defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2507e" stop-opacity=".45"/><stop offset="1" stop-color="#f2507e" stop-opacity="0"/></linearGradient></defs>
+      ${[0, 1, 2, 3].map((i) => `<line x1="0" x2="700" y1="${30 + i * 80}" y2="${30 + i * 80}" stroke="#2c2533" stroke-dasharray="4 6"/>`).join("")}
+      <path d="M0 120 C 100 110, 160 150, 240 140 S 380 90, 470 120 S 620 150, 700 130" fill="none" stroke="#5a4f63" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M0 70 C 90 80, 160 95, 240 120 S 380 160, 470 175 S 620 205, 700 215 L700 300 L0 300 Z" fill="url(#ga)"/>
+      <path d="M0 70 C 90 80, 160 95, 240 120 S 380 160, 470 175 S 620 205, 700 215" fill="none" stroke="#f2507e" stroke-width="4"/>
+    </svg>
+    <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:12.5px;margin-top:6px">${["seg", "ter", "qua", "qui", "sex", "sáb", "dom"].map((d) => `<span>${d}</span>`).join("")}</div>
+    <small class="muted">quanto mais baixo, mais rápido: a 1ª resposta caiu 38% na semana</small></div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;padding:14px 22px;background:linear-gradient(135deg,#e11d74,#f2545b);color:#fff" class="k"><span>Equipe</span><span>SLA</span><span>Nota</span></div>
+    ${[["Equipe Aurora", 98, 9.4, "#2dd4bf"], ["Equipe Brisa", 97, 9.1, "#2dd4bf"], ["Equipe Cometa", 95, 8.8, "#f6c050"], ["Equipe Delta", 93, 8.3, "#f6c050"], ["Equipe Eco", 89, 7.6, "#f2507e"]]
+      .map(([n, sla, nota, c], i) => `<div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;align-items:center;padding:15px 22px;border-top:1px solid var(--line)">
+        <div style="display:flex;gap:12px;align-items:center"><b style="color:var(--muted);width:18px">${i + 1}</b>${av(n.split(" ")[1].slice(0, 2).toUpperCase(), i)}<b>${n}</b></div>
+        <div><b style="color:${c}">${sla}%</b><div style="height:5px;border-radius:3px;background:#2e2735;margin-top:6px;width:80%"><div style="height:100%;width:${sla}%;border-radius:3px;background:${c}"></div></div></div>
+        <span class="chip" style="background:${c}22;color:${c};justify-self:start">${String(nota).replace(".", ",")}</span></div>`).join("")}
+    <div class="dark" style="margin:16px;padding:16px;border-radius:16px"><span class="k" style="color:#ffd1dc">✦ Alerta automático</span><div style="margin-top:6px">Equipe Eco abaixo da meta de SLA há 2 dias: relatório enviado à liderança.</div></div>
+  </div>
+</div>`,
+
 // 7. chat: conversa + passos da IA
 chat: () => `
 <div class="hd"><div><h1>Atendimento com <em>IA</em></h1><p>Conversa ao vivo · o agente responde e explica cada passo</p></div><span class="grow"></span><span class="chip" style="background:var(--mint-l);color:var(--mint)">● agente ativo</span></div>

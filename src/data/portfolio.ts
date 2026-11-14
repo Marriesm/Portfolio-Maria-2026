@@ -228,7 +228,8 @@ export const projects = {
       { area: "Onboarding", tone: "signal", modules: ["ativacao", "onboarding"] },
       { area: "Sucesso do cliente", tone: "pink", modules: ["farol", "reunioes-ia"] },
       { area: "Financeiro", tone: "data", modules: ["cobranca"] },
-      { area: "Atendimento e dados", tone: "signal", modules: ["ia-atendimento", "dados-historicos"] },
+      { area: "Atendimento", tone: "signal", modules: ["ia-atendimento"] },
+      { area: "Dados e telemetria", tone: "pink", modules: ["relatorios", "dados-historicos"] },
     ] satisfies PlatformArea[],
   },
   items: [
@@ -257,6 +258,17 @@ export const projects = {
       description:
         "Score automático que classifica cada cliente em saudável, atenção ou crítico, combinando sinais de vários sistemas. Resultado: o risco de cancelamento aparece antes, com o motivo de cada classificação.",
       farolCriteria: ["sinais financeiros", "engajamento", "uso do produto", "chamados abertos"],
+    },
+    {
+      slug: "relatorios",
+      mediaLabel: "demo · relatórios de desempenho",
+      captions: ["Relatório de desempenho: KPIs com metas, tendência semanal e ranking das equipes (dados fictícios)"],
+      meta: "Dados · Telemetria",
+      kind: "Relatórios",
+      title: "Telemetria e relatórios de desempenho",
+      description:
+        "Coleta e análise da telemetria da operação para medir desempenho: SLA, tempo de primeira resposta, volume de atendimentos, engajamento e uso do produto, por equipe, carteira e período. Os dados viram relatórios e painéis com metas, tendências e ranking, e alertas avisam quando um indicador sai do esperado. Resultado: a gestão decide com números atualizados, sem montar planilha na mão.",
+      highlights: ["SQL analítico", "Python + pandas", "KPIs e metas", "SLA e tempo de resposta", "dashboards", "alertas automáticos", "relatórios .xlsx"],
     },
     {
       slug: "dados-historicos",
@@ -388,7 +400,9 @@ export const experience = {
       org: "Poli Digital",
       bullets: [
         "Criei e desenvolvo de ponta a ponta (engine, API e telas) o software de operação usado por todas as áreas da empresa: onboarding, Customer Success, atendimento, financeiro e dados.",
-        "Criei o health score das carteiras e modelei a camada de dados histórica de churn.",
+        "Analiso a telemetria da operação e transformo os dados em relatórios de desempenho por equipe, carteira e atendimento, com KPIs, metas e tendências para a gestão.",
+        "Monitoro indicadores como SLA, tempo de resposta, engajamento e uso do produto, com alertas automáticos quando algo sai do esperado.",
+        "Criei o health score das carteiras e modelei a camada de dados histórica de churn, com snapshots diários e backfill.",
         "Desenvolvi soluções de IA para a operação: agentes de atendimento, roteiros gerados por IA e avaliação automática de reuniões.",
         "Construí automações de agendamento, cobrança e acompanhamento de clientes, integradas por APIs.",
         "Integrei sistema financeiro, CRM, Jira, Google Workspace e as plataformas de atendimento por APIs, webhooks e n8n; criei a IA de atendimento no n8n; mantenho migrações com Alembic, seeds e deploy.",

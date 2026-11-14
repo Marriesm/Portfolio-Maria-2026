@@ -45,7 +45,7 @@ Depois de salvar, o `npm run dev` atualiza a página sozinho.
 
 ### Prints dos projetos (carrossel)
 
-Solte as imagens em **`src/assets/projetos/`** com o nome `<slug>-<número>.png` (ex.: `farol-1.png`,
+Solte as imagens em **`src/assets/projetos/`** com o nome `<slug>-<número>.png` (ex.: `farol-1.webp`,
 `farol-2.png`). Elas entram sozinhas no carrossel do topo da seção Projetos, separado das descrições: painéis
 em 3D que giram em perspectiva, arrastados com o dedo ou o mouse, com setas, teclado (← →) e barra de
 progresso. Clicar na tela do centro abre em tela cheia. O `slug` de cada projeto está em `projects.items`, e a
